@@ -2,6 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import ForestHouseModel from "./components/models/ForestHouseModel";
 import { OrbitControls } from "@react-three/drei";
 import { Suspense } from "react";
+import ToonTree from "./components/models/ToonTree";
 
 export default function App() {
   return (
@@ -17,7 +18,8 @@ export default function App() {
       <gridHelper args={[10, 10, 20]} />
       <axesHelper args={[10]} />
       <Suspense fallback={null}>
-        <ForestHouseModel />
+        <ForestHouseModel scale={20} position={[0, 0, 1]} rotation={[0,Math.PI/2,0 ]}/>
+        <ToonTree scale={10} />
       </Suspense>
       <OrbitControls
         autoRotate={false}
