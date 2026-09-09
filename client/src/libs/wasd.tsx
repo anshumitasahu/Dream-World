@@ -14,7 +14,6 @@ export default function useWASD() {
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            console.log(e.key)
             if (e.key === 'w' || e.key === 'ArrowUp') {
                 keys.current.w = true
             }

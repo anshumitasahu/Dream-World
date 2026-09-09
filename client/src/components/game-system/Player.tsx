@@ -68,7 +68,7 @@ export default function Player() {
             window.removeEventListener("keydown", handleKeyDown);
             window.removeEventListener("keyup", handleKeyUp);
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         const canvas = gl.domElement;
@@ -76,8 +76,8 @@ export default function Player() {
         const onMouseMove = (e: MouseEvent) => {
             if (document.pointerLockElement !== canvas) return;
             yaw.current -= e.movementX * MOUSE_SENS;
-            const next = pitch.current + e.movementY * MOUSE_SENS
-            pitch.current = Math.min(MAX_PITCH, Math.max(MIN_PITCH, next))
+            const next = pitch.current + e.movementY * MOUSE_SENS;
+            pitch.current = Math.min(MAX_PITCH, Math.max(MIN_PITCH, next));
         }
         document.addEventListener('pointerlockchange', onLockChange);
         document.addEventListener('mousemove', onMouseMove);
@@ -94,12 +94,12 @@ export default function Player() {
 
     useFrame((_, delta) => {
         const SPEED = 2;
-        const b = body.current
-        if (!b) return
-        const JUMP = 3
+        const b = body.current;
+        if (!b) return;
+        const JUMP = 3;
 
-        const CAM_SMOOTH = 5
-        const LOOK_HEIGHT = 1
+        const CAM_SMOOTH = 5;
+        const LOOK_HEIGHT = 1;
 
         const k = keys.current;
         let x = 0;
@@ -110,17 +110,17 @@ export default function Player() {
         if (k["d"]) x += 1;
 
         if (x !== 0 && z !== 0) {
-            x *= Math.SQRT1_2
-            z *= Math.SQRT1_2
+            x *= Math.SQRT1_2;
+            z *= Math.SQRT1_2;
         };
 
-        const s = Math.sin(yaw.current)
-        const c = Math.cos(yaw.current)
-        const wx = x * c + z * s
-        const wz = -x * s + z * c
+        const s = Math.sin(yaw.current);
+        const c = Math.cos(yaw.current);
+        const wx = x * c + z * s;
+        const wz = -x * s + z * c;
 
         const vel = b.linvel();
-        let jumpY = vel.y
+        let jumpY = vel.y;
         if (k['space'])
             jumpY = JUMP;
         b.setLinvel({ x: wx * SPEED, y: jumpY, z: wz * SPEED }, true);
@@ -191,5 +191,5 @@ export default function Player() {
                 </mesh>
             </RigidBody>
         </>
-    )
-}
+    );
+};
