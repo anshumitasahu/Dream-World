@@ -63,13 +63,11 @@ export default function useWASD() {
     useFrame((_, delta) => {
         const speed = 0.5 * delta
         const jump = 1;
-        const gravity = 1;
-
         if (keys.current["w"]) control?.current?.moveForward(speed);
         if (keys.current["s"]) control?.current?.moveForward(-speed);
         if (keys.current["a"]) control?.current?.moveRight(-speed);
         if (keys.current["d"]) control?.current?.moveRight(speed);
-        if (keys.current["space"]) control.current.object.position.y +=  (jump * delta);
+        if (keys.current["space"]) control.current.object.position.y += (jump * delta);
 
         // console.log(control.current.object.position.y);
     });

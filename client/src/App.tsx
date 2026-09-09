@@ -1,18 +1,13 @@
 import { Canvas } from "@react-three/fiber";
-import ForestHouseModel from "./components/models/ForestHouseModel";
 import { Suspense } from "react";
+import { Physics, RigidBody } from "@react-three/rapier";
+import ForestHouseModel from "./components/models/ForestHouseModel";
 import ToonTree from "./components/models/ToonTree";
-// import { PointerLockControls } from "@react-three/drei";
-import useWASD from "./libs/wasd";
+import Player from "./components/game-system/Player";
 
 export default function App() {
-  function Player() {
-    const controls = useWASD();
-    return controls;
-  }
-
   return (
-    <div>
+    < div >
       <Canvas style={{
         width: "100vw",
         height: "100vh"
@@ -20,16 +15,28 @@ export default function App() {
         camera={{ position: [0, 0.3, 0] }}
         frameloop="always"
       >
-        <fog attach="fog" args={['#cccccc', 5, 15]} />
+        <fog attach="fog" args={['#cccccc', 5, 30]} />
         <ambientLight intensity={1} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <gridHelper args={[10, 10, 20]} />
         <axesHelper args={[10]} />
-        <Suspense fallback={null}>
-          <ForestHouseModel scale={20} position={[0, 0, 1]} rotation={[0, Math.PI / 2, 0]} />
-          <ToonTree scale={10} />
-        </Suspense>
-        <Player />
+        <Physics gravity={[0, -9.81, 0]} >
+          <Suspense fallback={null}>
+            <RigidBody colliders="cuboid" position={[0, 0, 0]} type="fixed">
+              <ForestHouseModel scale={20} position={[0, 0, 1]} rotation={[0, Math.PI / 2, 0]} />
+            </RigidBody>
+            <RigidBody colliders="hull" position={[0, 0, 0]} type="fixed">
+              <ToonTree scale={10} />
+            </RigidBody>
+            <RigidBody colliders="cuboid" position={[0, 0, 0]} type="fixed">
+              <mesh position={[0, -0.5, 0]}>
+                <boxGeometry args={[50, 1, 50]} />
+                <meshStandardMaterial />
+              </mesh>
+            </RigidBody>
+          </Suspense>
+          <Player />
+        </Physics>
       </Canvas>
     </div>
   )
