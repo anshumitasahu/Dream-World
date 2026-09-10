@@ -4,6 +4,7 @@ import { Physics, RigidBody } from "@react-three/rapier";
 import ForestHouseModel from "./components/models/ForestHouseModel";
 import ToonTree from "./components/models/ToonTree";
 import Player from "./components/game-system/Player";
+import PlayerHud from "./components/game-system/PlayerHud";
 
 export default function App() {
   return (
@@ -24,22 +25,17 @@ export default function App() {
         <axesHelper args={[10]} />
         <Physics gravity={[0, -9.81, 0]} debug>
           <Suspense fallback={null}>
-            <RigidBody colliders="cuboid" position={[0, 0, 0]} type="fixed">
-              <mesh position={[0, -0.5, 0]}>
-                <boxGeometry args={[50, 1, 50]} />
-                <meshStandardMaterial color={""} />
-              </mesh>
+            <RigidBody colliders="trimesh" position={[-3, 0, 5]} type="fixed" >
+              <ForestHouseModel scale={100} position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
             </RigidBody>
-            <RigidBody colliders="hull" position={[0, 0, 0]} type="fixed" >
-              <ForestHouseModel scale={20} position={[0, 0, 1]} rotation={[0, Math.PI / 2, 0]} />
+            <RigidBody colliders="trimesh" position={[0, 0, 0]} type="fixed">
+              <ToonTree scale={30} />
             </RigidBody>
-            <RigidBody colliders="hull" position={[0, 0, 0]} type="fixed">
-              <ToonTree scale={10} />
-            </RigidBody>
+            <Player />
           </Suspense>
-          <Player />
         </Physics>
       </Canvas>
+      <PlayerHud />
     </div>
   );
 };
