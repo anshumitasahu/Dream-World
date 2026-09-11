@@ -18,8 +18,8 @@ export default function EcctrlWrapper() {
     const pressedKeysRef = useRef<Set<string>>(new Set());
     const lookYawRef = useRef(0);
     const lookPitchRef = useRef(0);
-    const lookEulerRef = useRef(new THREE.Euler(0, 0, 0, 'YXZ'),)
-    const renderer = useThree((s) => s.gl)
+    const lookEulerRef = useRef(new THREE.Euler(0, 0, 0, 'YXZ'),);
+    const renderer = useThree((s) => s.gl);
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -29,57 +29,55 @@ export default function EcctrlWrapper() {
             pressedKeysRef.current.delete(event.code);
         };
 
-        window.addEventListener('keydown', handleKeyDown)
-        window.addEventListener('keyup', handleKeyUp)
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keyup', handleKeyUp);
 
         return () => {
-            window.removeEventListener('keydown', handleKeyDown)
-            window.removeEventListener('keyup', handleKeyUp)
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('keyup', handleKeyUp);
         }
     }, []);
 
     useEffect(() => {
-        const canvas = renderer.domElement
+        const canvas = renderer.domElement;
 
         const handlePointerLockChange = () => {
             usePlayerHudStore.getState().setPlayerHud({
                 isPointerLocked: document.pointerLockElement === canvas,
-            })
-        }
+            });
+        };
 
         const handleMouseMove = (event: MouseEvent) => {
-            if (document.pointerLockElement !== canvas) return
-            lookYawRef.current -= event.movementX * MOUSE_SENSITIVITY
+            if (document.pointerLockElement !== canvas) return;
+            lookYawRef.current -= event.movementX * MOUSE_SENSITIVITY;
 
-            const nextPitch = lookPitchRef.current - event.movementY * MOUSE_SENSITIVITY
+            const nextPitch = lookPitchRef.current - event.movementY * MOUSE_SENSITIVITY;
 
             lookPitchRef.current = Math.min(MAX_LOOK_PITCH, Math.max(-MAX_LOOK_PITCH, nextPitch),
-            )
-        }
+            );
+        };
 
         document.addEventListener('pointerlockchange', handlePointerLockChange);
         document.addEventListener('mousemove', handleMouseMove);
 
         return () => {
             document.removeEventListener('pointerlockchange', handlePointerLockChange);
-            document.removeEventListener('mousemove', handleMouseMove,)
-        }
-    }, [renderer])
+            document.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, [renderer]);
 
     useFrame((state) => {
-        const controller = ecctrlRef.current
-
+        const controller = ecctrlRef.current;
         if (!controller) return;
 
-        const keys = pressedKeysRef.current
-
+        const keys = pressedKeysRef.current;
 
         controller.setMovement({
             forward:
                 keys.has('KeyW') || keys.has('ArrowUp'),
 
             backward:
-                keys.has('KeyS') || keys.has('ArroeDown'),
+                keys.has('KeyS') || keys.has('ArrowDown'),
 
             leftward:
                 keys.has('KeyA') || keys.has('ArrowLeft'),
@@ -87,30 +85,33 @@ export default function EcctrlWrapper() {
             rightward:
                 keys.has('KeyD') || keys.has('ArrowRight'),
 
+            run:
+                keys.has('ShiftLeft'),
+
             jump:
                 keys.has('Space')
-        })
+        });
 
-        const bodyPosition = controller.currPos
+        const bodyPosition = controller.currPos;
 
         state.camera.position.set(
             bodyPosition.x,
             bodyPosition.y + EYE_HEIGHT_ABOVE_CENTER,
             bodyPosition.z,
-        )
+        );
 
-        const lookEuler = lookEulerRef.current
+        const lookEuler = lookEulerRef.current;
         lookEuler.set(
             lookPitchRef.current,
             lookYawRef.current,
             0,
-        )
+        );
         state.camera.quaternion.setFromEuler(lookEuler);
 
         usePlayerHudStore.getState().setPlayerHud({
             isGrounded: controller.isOnGround,
-        })
-    })
+        });
+    });
 
     return (
         <Ecctrl
@@ -125,4 +126,4 @@ export default function EcctrlWrapper() {
             <CharacterModel position={[0, -0.6, 0]} />
         </Ecctrl>
     );
-}
+};
