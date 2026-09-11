@@ -1,11 +1,11 @@
-import { usePlayerHudStore } from "./PlayerHudStore";
+import { usePlayerHudStore } from './PlayerHudStore';
 
 export default function PlayerHud() {
     const { isPointerLocked, isGrounded } = usePlayerHudStore();
 
     const requestPointerLock = () => {
-        const canvas = document.querySelector('#root canvas')
-        if (!(canvas instanceof HTMLCanvasElement)) return
+        const canvas = document.querySelector('#root canvas');
+        if (!(canvas instanceof HTMLCanvasElement)) return;
         const lockRequest = canvas.requestPointerLock() as unknown as Promise<void> | undefined
         if (lockRequest && typeof lockRequest.catch === 'function') lockRequest.catch(() => { })
     }
@@ -33,8 +33,8 @@ export default function PlayerHud() {
                         left: 16,
                         bottom: 16,
                         padding: '6px 12px',
-                        borderRadius: 8,
-                        background: isGrounded ? 'rgba(34, 197, 94, 0.05)' : 'rgba(239, 68, 68, 0.85)',
+                        borderRadius: 50,
+                        border: isGrounded ? '1px solid rgba(34, 197, 94, 0.49)' : '1px solid rgba(239, 68, 68, 0.85)',
                         color: 'white',
                         fontSize: 14,
                         fontFamily: 'sans-serif',
@@ -42,7 +42,7 @@ export default function PlayerHud() {
                         zIndex: 10,
                     }}
                 >
-                    {isGrounded ? 'Grounded' : 'AiirBorne'}
+                    {isGrounded ? 'Grounded' : 'AirBorne'}
                 </div>
             </>
         )
@@ -65,7 +65,7 @@ export default function PlayerHud() {
                 zIndex: 10
             }}
         >
-            Click to look around (WASD to move, ESC to release)
+            Click to look around!! (WASD to move, ESC to release)
         </div>
     )
 }
