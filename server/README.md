@@ -1,15 +1,19 @@
-# server
-
-To install dependencies:
-
-```bash
-bun install
+# start server
+```shell
+bun start
 ```
 
-To run:
-
+# prisma model creation
 ```bash
-bun run index.ts
-```
 
-This project was created using `bun init` in bun v1.3.14. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+# make changes in shcema.prisma
+
+# prisma generate to genereate "types" for code 
+bunx prisma generate # not required often
+
+# migrate the new changes of schema.prisma
+bunx prisma migrate dev 
+
+# clean db
+bunx prisma migrate reset
+```
