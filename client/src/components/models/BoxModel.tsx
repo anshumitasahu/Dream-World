@@ -5,7 +5,7 @@ export default function BoxModel(props: any) {
     const meshRef = useRef<any>(null);
     const [hovered, setHover] = useState(false);
     const [active, setActive] = useState(false);
-    useFrame((_state, delta) => (meshRef.current.rotation.x += delta))
+    useFrame((_state, delta) => (meshRef.current.rotation.x += delta));
 
     return (
         <mesh
@@ -18,5 +18,5 @@ export default function BoxModel(props: any) {
             <boxGeometry args={[1, 1, 1]} />
             <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
         </mesh>
-    )
-}
+    );
+};

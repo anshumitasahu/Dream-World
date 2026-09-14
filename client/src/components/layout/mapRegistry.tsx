@@ -8,5 +8,5 @@ export interface MapEntry {
 };
 
 export const MAP_REGISTRY: Record<string, MapEntry> = {
-    testMap: { component: TestMap, spawnZones: TestMapSpawnZones },
+    testMap: { component: TestMap, spawnZones: TestMapSpawnZones }
 };

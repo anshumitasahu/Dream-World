@@ -1,12 +1,12 @@
-import { useRef, type JSX } from 'react'
-import { useGLTF } from '@react-three/drei'
-import { Mesh, type Group } from 'three'
-import { RigidBody } from '@react-three/rapier'
+import { useRef, type JSX } from 'react';
+import { useGLTF } from '@react-three/drei';
+import { Mesh, type Group } from 'three';
+import { RigidBody } from '@react-three/rapier';
 
 
 export function HoverCar(props: JSX.IntrinsicElements['group']) {
-    const group = useRef<Group | null>(null)
-    const { nodes, materials } = useGLTF('/models/cyberpunk_hovercar.glb')
+    const group = useRef<Group | null>(null);
+    const { nodes, materials } = useGLTF('/models/cyberpunk_hovercar.glb');
 
     return (
         <RigidBody type="fixed" colliders="hull" position={[0, 0, 0]}>
@@ -1177,7 +1177,7 @@ export function HoverCar(props: JSX.IntrinsicElements['group']) {
                 </group>
             </group>
         </RigidBody>
-    )
-}
+    );
+};
 
-useGLTF.preload('/models/cyberpunk_hovercar.glb')
+useGLTF.preload('/models/cyberpunk_hovercar.glb');

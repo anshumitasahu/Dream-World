@@ -26,40 +26,52 @@ export type AggregateUser = {
 
 export type UserMinAggregateOutputType = {
   id: string | null
-  userName: string | null
+  name: string | null
   email: string | null
+  password: string | null
+  createdAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
-  userName: string | null
+  name: string | null
   email: string | null
+  password: string | null
+  createdAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
-  userName: number
+  name: number
   email: number
+  password: number
+  createdAt: number
   _all: number
 }
 
 
 export type UserMinAggregateInputType = {
   id?: true
-  userName?: true
+  name?: true
   email?: true
+  password?: true
+  createdAt?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
-  userName?: true
+  name?: true
   email?: true
+  password?: true
+  createdAt?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
-  userName?: true
+  name?: true
   email?: true
+  password?: true
+  createdAt?: true
   _all?: true
 }
 
@@ -137,8 +149,10 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type UserGroupByOutputType = {
   id: string
-  userName: string
+  name: string
   email: string
+  password: string
+  createdAt: Date
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -164,29 +178,43 @@ export type UserWhereInput = {
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
-  userName?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringFilter<"User"> | string
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  movies?: Prisma.MovieListRelationFilter
+  watchlistItems?: Prisma.WatchlistItemListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  userName?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  movies?: Prisma.MovieOrderByRelationAggregateInput
+  watchlistItems?: Prisma.WatchlistItemOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  email?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  userName?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringFilter<"User"> | string
-}, "id">
+  name?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringFilter<"User"> | string
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  movies?: Prisma.MovieListRelationFilter
+  watchlistItems?: Prisma.WatchlistItemListRelationFilter
+}, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  userName?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -197,109 +225,341 @@ export type UserScalarWhereWithAggregatesInput = {
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
-  userName?: Prisma.StringWithAggregatesFilter<"User"> | string
+  name?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
+  password?: Prisma.StringWithAggregatesFilter<"User"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
 export type UserCreateInput = {
   id?: string
-  userName: string
+  name: string
   email: string
+  password: string
+  createdAt?: Date | string
+  movies?: Prisma.MovieCreateNestedManyWithoutCreatorInput
+  watchlistItems?: Prisma.WatchlistItemCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
-  userName: string
+  name: string
   email: string
+  password: string
+  createdAt?: Date | string
+  movies?: Prisma.MovieUncheckedCreateNestedManyWithoutCreatorInput
+  watchlistItems?: Prisma.WatchlistItemUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  movies?: Prisma.MovieUpdateManyWithoutCreatorNestedInput
+  watchlistItems?: Prisma.WatchlistItemUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  movies?: Prisma.MovieUncheckedUpdateManyWithoutCreatorNestedInput
+  watchlistItems?: Prisma.WatchlistItemUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
-  userName: string
+  name: string
   email: string
+  password: string
+  createdAt?: Date | string
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userName?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userName?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userName?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+}
+
+export type UserScalarRelationFilter = {
+  is?: Prisma.UserWhereInput
+  isNot?: Prisma.UserWhereInput
 }
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
+export type UserCreateNestedOneWithoutMoviesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMoviesInput, Prisma.UserUncheckedCreateWithoutMoviesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMoviesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMoviesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMoviesInput, Prisma.UserUncheckedCreateWithoutMoviesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMoviesInput
+  upsert?: Prisma.UserUpsertWithoutMoviesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMoviesInput, Prisma.UserUpdateWithoutMoviesInput>, Prisma.UserUncheckedUpdateWithoutMoviesInput>
+}
+
+export type UserCreateNestedOneWithoutWatchlistItemsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWatchlistItemsInput, Prisma.UserUncheckedCreateWithoutWatchlistItemsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWatchlistItemsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutWatchlistItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWatchlistItemsInput, Prisma.UserUncheckedCreateWithoutWatchlistItemsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWatchlistItemsInput
+  upsert?: Prisma.UserUpsertWithoutWatchlistItemsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWatchlistItemsInput, Prisma.UserUpdateWithoutWatchlistItemsInput>, Prisma.UserUncheckedUpdateWithoutWatchlistItemsInput>
+}
+
+export type UserCreateWithoutMoviesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  createdAt?: Date | string
+  watchlistItems?: Prisma.WatchlistItemCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutMoviesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  createdAt?: Date | string
+  watchlistItems?: Prisma.WatchlistItemUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutMoviesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMoviesInput, Prisma.UserUncheckedCreateWithoutMoviesInput>
+}
+
+export type UserUpsertWithoutMoviesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMoviesInput, Prisma.UserUncheckedUpdateWithoutMoviesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMoviesInput, Prisma.UserUncheckedCreateWithoutMoviesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMoviesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMoviesInput, Prisma.UserUncheckedUpdateWithoutMoviesInput>
+}
+
+export type UserUpdateWithoutMoviesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  watchlistItems?: Prisma.WatchlistItemUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMoviesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  watchlistItems?: Prisma.WatchlistItemUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutWatchlistItemsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  createdAt?: Date | string
+  movies?: Prisma.MovieCreateNestedManyWithoutCreatorInput
+}
+
+export type UserUncheckedCreateWithoutWatchlistItemsInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  createdAt?: Date | string
+  movies?: Prisma.MovieUncheckedCreateNestedManyWithoutCreatorInput
+}
+
+export type UserCreateOrConnectWithoutWatchlistItemsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWatchlistItemsInput, Prisma.UserUncheckedCreateWithoutWatchlistItemsInput>
+}
+
+export type UserUpsertWithoutWatchlistItemsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWatchlistItemsInput, Prisma.UserUncheckedUpdateWithoutWatchlistItemsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWatchlistItemsInput, Prisma.UserUncheckedCreateWithoutWatchlistItemsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWatchlistItemsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWatchlistItemsInput, Prisma.UserUncheckedUpdateWithoutWatchlistItemsInput>
+}
+
+export type UserUpdateWithoutWatchlistItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  movies?: Prisma.MovieUpdateManyWithoutCreatorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWatchlistItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  movies?: Prisma.MovieUncheckedUpdateManyWithoutCreatorNestedInput
+}
+
+
+/**
+ * Count Type UserCountOutputType
+ */
+
+export type UserCountOutputType = {
+  movies: number
+  watchlistItems: number
+}
+
+export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  movies?: boolean | UserCountOutputTypeCountMoviesArgs
+  watchlistItems?: boolean | UserCountOutputTypeCountWatchlistItemsArgs
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserCountOutputType
+   */
+  select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMoviesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MovieWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWatchlistItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WatchlistItemWhereInput
+}
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userName?: boolean
+  name?: boolean
   email?: boolean
+  password?: boolean
+  createdAt?: boolean
+  movies?: boolean | Prisma.User$moviesArgs<ExtArgs>
+  watchlistItems?: boolean | Prisma.User$watchlistItemsArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userName?: boolean
+  name?: boolean
   email?: boolean
+  password?: boolean
+  createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userName?: boolean
+  name?: boolean
   email?: boolean
+  password?: boolean
+  createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
-  userName?: boolean
+  name?: boolean
   email?: boolean
+  password?: boolean
+  createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userName" | "email", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "createdAt", ExtArgs["result"]["user"]>
+export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  movies?: boolean | Prisma.User$moviesArgs<ExtArgs>
+  watchlistItems?: boolean | Prisma.User$watchlistItemsArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
-  objects: {}
+  objects: {
+    movies: Prisma.$MoviePayload<ExtArgs>[]
+    watchlistItems: Prisma.$WatchlistItemPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    userName: string
+    name: string
     email: string
+    password: string
+    createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -694,6 +954,8 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  movies<T extends Prisma.User$moviesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$moviesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  watchlistItems<T extends Prisma.User$watchlistItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$watchlistItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WatchlistItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -724,8 +986,10 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
-  readonly userName: Prisma.FieldRef<"User", 'String'>
+  readonly name: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
+  readonly password: Prisma.FieldRef<"User", 'String'>
+  readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 
@@ -742,6 +1006,10 @@ export type UserFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * Filter, which User to fetch.
    */
@@ -761,6 +1029,10 @@ export type UserFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where: Prisma.UserWhereUniqueInput
@@ -778,6 +1050,10 @@ export type UserFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * Filter, which User to fetch.
    */
@@ -827,6 +1103,10 @@ export type UserFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where?: Prisma.UserWhereInput
@@ -874,6 +1154,10 @@ export type UserFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * Filter, which Users to fetch.
    */
@@ -923,6 +1207,10 @@ export type UserCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * The data needed to create a User.
    */
   data: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>
@@ -970,6 +1258,10 @@ export type UserUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * The data needed to update a User.
    */
@@ -1037,6 +1329,10 @@ export type UserUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * The filter to search for the User to update in case it exists.
    */
   where: Prisma.UserWhereUniqueInput
@@ -1063,6 +1359,10 @@ export type UserDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter which User to delete.
    */
   where: Prisma.UserWhereUniqueInput
@@ -1083,6 +1383,54 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * User.movies
+ */
+export type User$moviesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Movie
+   */
+  select?: Prisma.MovieSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Movie
+   */
+  omit?: Prisma.MovieOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MovieInclude<ExtArgs> | null
+  where?: Prisma.MovieWhereInput
+  orderBy?: Prisma.MovieOrderByWithRelationInput | Prisma.MovieOrderByWithRelationInput[]
+  cursor?: Prisma.MovieWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MovieScalarFieldEnum | Prisma.MovieScalarFieldEnum[]
+}
+
+/**
+ * User.watchlistItems
+ */
+export type User$watchlistItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WatchlistItem
+   */
+  select?: Prisma.WatchlistItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WatchlistItem
+   */
+  omit?: Prisma.WatchlistItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WatchlistItemInclude<ExtArgs> | null
+  where?: Prisma.WatchlistItemWhereInput
+  orderBy?: Prisma.WatchlistItemOrderByWithRelationInput | Prisma.WatchlistItemOrderByWithRelationInput[]
+  cursor?: Prisma.WatchlistItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WatchlistItemScalarFieldEnum | Prisma.WatchlistItemScalarFieldEnum[]
+}
+
+/**
  * User without action
  */
 export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1094,4 +1442,8 @@ export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
 }

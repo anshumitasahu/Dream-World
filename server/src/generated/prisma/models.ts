@@ -9,4 +9,6 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User.ts'
+export type * from './models/Movie.ts'
+export type * from './models/WatchlistItem.ts'
 export type * from './commonInputTypes.ts'

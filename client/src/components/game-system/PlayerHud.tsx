@@ -6,9 +6,9 @@ export default function PlayerHud() {
     const requestPointerLock = () => {
         const canvas = document.querySelector('#root canvas');
         if (!(canvas instanceof HTMLCanvasElement)) return;
-        const lockRequest = canvas.requestPointerLock() as unknown as Promise<void> | undefined
-        if (lockRequest && typeof lockRequest.catch === 'function') lockRequest.catch(() => { })
-    }
+        const lockRequest = canvas.requestPointerLock() as unknown as Promise<void> | undefined;
+        if (lockRequest && typeof lockRequest.catch === 'function') lockRequest.catch(() => { });
+    };
 
     if (isPointerLocked) {
         return (
@@ -45,8 +45,8 @@ export default function PlayerHud() {
                     {isGrounded ? 'Grounded' : 'AirBorne'}
                 </div>
             </>
-        )
-    }
+        );
+    };
 
     return (
         <div
@@ -67,5 +67,5 @@ export default function PlayerHud() {
         >
             Click to look around!! (WASD to move, ESC to release)
         </div>
-    )
-}
+    );
+};

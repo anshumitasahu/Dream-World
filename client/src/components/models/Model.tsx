@@ -5,7 +5,7 @@ interface ModelProps {
     rotation?: [number, number, number];
     scale?: number;
     modelPath: string;
-}
+};
 
 export default function Model({ position, rotation, scale, modelPath }: ModelProps) {
     const gltf = useGLTF(modelPath, true);
@@ -17,5 +17,5 @@ export default function Model({ position, rotation, scale, modelPath }: ModelPro
             rotation={rotation}
             scale={scale}
         />
-    )
-}
+    );
+};

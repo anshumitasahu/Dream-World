@@ -15,12 +15,8 @@ export default function App() {
         }}
         camera={{ fov: 75, near: 0.1, far: 1000, position: [0, 0.3, 0] }}
       >
-        {/* <color attach="background" args={['#111111']} />
-        <fog attach="fog" args={['#111111', 5, 25]} />
-        <ambientLight intensity={1} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <gridHelper args={[10, 10, 20]} />
-        <axesHelper args={[10]} /> */}
+        {/* <ambientLight intensity={1} />
+        <directionalLight position={[10, 10, 5]} intensity={1} /> */}
         <Suspense fallback={null}>
           {/* <RigidBody colliders="trimesh" position={[-3, 0, 5]} type="fixed" >
               <ForestHouseModel scale={100} position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]} />

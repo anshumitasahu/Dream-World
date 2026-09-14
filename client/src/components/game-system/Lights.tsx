@@ -6,5 +6,5 @@ export default function Lights() {
             </directionalLight>
             <hemisphereLight intensity={1.2} groundColor="#d9e7ff" color="#fff" />
         </>
-    )
-}
+    );
+};

@@ -92,5 +92,5 @@ export function WorldObject({ config, defaultZone, spawnZones }: {
         <RigidBody type="fixed" colliders="trimesh" position={placement.position} rotation={[0, placement.rotationY, 0]}>
             {model}
         </RigidBody>
-    )
-}
+    );
+};

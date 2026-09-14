@@ -1,14 +1,14 @@
-import type { ThreeElements } from '@react-three/fiber'
-import { MAP_REGISTRY } from './mapRegistry'
-import { WorldObject } from './WorldObject'
-import type { WorldConfig } from './WorldTypes'
+import type { ThreeElements } from '@react-three/fiber';
+import { MAP_REGISTRY } from './mapRegistry';
+import { WorldObject } from './WorldObject';
+import type { WorldConfig } from './WorldTypes';
 
 export function World({ config, ...props }: ThreeElements['group'] & { config: WorldConfig }) {
-  const entry = MAP_REGISTRY[config.map]
+  const entry = MAP_REGISTRY[config.map];
   if (!entry) {
-    console.warn(`[World] Unknown map "${config.map}". Available maps: ${Object.keys(MAP_REGISTRY).join(', ')}`)
-    return null
-  }
+    console.warn(`[World] Unknown map "${config.map}". Available maps: ${Object.keys(MAP_REGISTRY).join(', ')}`);
+    return null;
+  };
   const MapComponent = entry.component
   return (
     <group {...props}>
@@ -22,5 +22,5 @@ export function World({ config, ...props }: ThreeElements['group'] & { config: W
         />
       ))}
     </group>
-  )
-}
+  );
+};

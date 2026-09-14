@@ -6,7 +6,9 @@ export default function CharacterModel(props: ThreeElements['group']) {
         <group {...props} dispose={null}>
             <mesh castShadow receiveShadow />
         </group>
-    )
-}
+    );
+};
 
-useGLTF.preload('/models/capsule.glb')
+useGLTF.preload('/models/capsule.glb');
+
+// /(0V0)\

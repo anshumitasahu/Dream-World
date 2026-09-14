@@ -16,7 +16,7 @@ export default function Player() {
     const lookYawRef = useRef(0);
     const lookPitchRef = useRef(0);
     const lookEulerRef = useRef(new THREE.Euler(0, 0, 0, 'YXZ'));
-    const renderer = useThree((s) => s.gl)
+    const renderer = useThree((s) => s.gl);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => pressedKeysRef.current.add(e.code);

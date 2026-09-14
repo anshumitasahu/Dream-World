@@ -51,7 +51,9 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Movie: 'Movie',
+  WatchlistItem: 'WatchlistItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -72,11 +74,42 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  userName: 'userName',
-  email: 'email'
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  createdAt: 'createdAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const MovieScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  overview: 'overview',
+  releaseYear: 'releaseYear',
+  genres: 'genres',
+  runTime: 'runTime',
+  posterUrl: 'posterUrl',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt'
+} as const
+
+export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
+
+
+export const WatchlistItemScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  movieId: 'movieId',
+  status: 'status',
+  rating: 'rating',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WatchlistItemScalarFieldEnum = (typeof WatchlistItemScalarFieldEnum)[keyof typeof WatchlistItemScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -93,4 +126,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

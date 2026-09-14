@@ -44,6 +44,7 @@ export const TestMapSpawnZones: Array<[number, number, number]> = [
     [0, -165, 6],
     [-60, 90, 6],
     [0, 60, 8],
+    [-26, 0, -27],
 ];
 
 export function TestMap({ paused = false, timeScale = 1, ...props }: ThreeElements['group'] & { paused?: boolean; timeScale?: TimeScaleValue }) {
