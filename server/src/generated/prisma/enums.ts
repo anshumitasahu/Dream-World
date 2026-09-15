@@ -9,11 +9,7 @@
 * 🟢 You can import this file directly.
 */
 
-export const WatchlistStatus = {
-  PLANNED: 'PLANNED',
-  COMPLETED: 'COMPLETED',
-  WATCHING: 'WATCHING',
-  DROPPED: 'DROPPED'
-} as const
 
-export type WatchlistStatus = (typeof WatchlistStatus)[keyof typeof WatchlistStatus]
+
+// This file is empty because there are no enums in the schema.
+export {}

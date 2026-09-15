@@ -18,44 +18,66 @@ model User {
   email    String @unique
   password String
 
+  createdAt DateTime  @default(now())
+  posts     Post[]
+  likes     Like[]
+  comments  Comment[]
+  following Follow[]  @relation("Following")
+  follower  Follow[]  @relation("Follower")
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  likes    Like[]
+  comments Comment[]
+
+  @@index([authorId])
+  @@index([createdAt])
+}
+
+model Like {
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
 
-  movies         Movie[]         @relation("MovieCreator")
-  watchlistItems WatchlistItem[]
+  userId String
+  postId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
 }
 
-model Movie {
-  id          String   @id @default(uuid())
-  title       String
-  overview    String?
-  releaseYear Int
-  genres      String[] @default([])
-  runTime     Int?
-  posterUrl   String
-  createdBy   String
-  createdAt   DateTime @default(now())
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
 
-  creator        User            @relation("MovieCreator", fields: [createdBy], references: [id], onDelete: Cascade)
-  watchlistItems WatchlistItem[]
+  userId String
+  postId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
 }
 
-model WatchlistItem {
-  id        String          @id @default(uuid())
-  userId    String
-  movieId   String
-  status    WatchlistStatus @default(PLANNED)
-  rating    Int
-  notes     String
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @default(now())
+model Follow {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
 
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
-}
+  followingId String
+  followerId  String
 
-enum WatchlistStatus {
-  PLANNED
-  COMPLETED
-  WATCHING
-  DROPPED
+  follower  User @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("Follower", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
 }

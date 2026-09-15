@@ -47,12 +47,22 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
- * Model Movie
+ * Model Post
  * 
  */
-export type Movie = Prisma.MovieModel
+export type Post = Prisma.PostModel
 /**
- * Model WatchlistItem
+ * Model Like
  * 
  */
-export type WatchlistItem = Prisma.WatchlistItemModel
+export type Like = Prisma.LikeModel
+/**
+ * Model Comment
+ * 
+ */
+export type Comment = Prisma.CommentModel
+/**
+ * Model Follow
+ * 
+ */
+export type Follow = Prisma.FollowModel

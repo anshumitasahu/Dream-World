@@ -13,11 +13,13 @@ export const generateToken = (userId: string, res: Response) => {
     const tokens = jwt.sign(payload, secret, {
         expiresIn: expiresIn as any
     });
+    console.log("SETTING COOKIE");
     res.cookie("jwt", tokens, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
         maxAge: (1000 * 60 * 60 * 24) * 7
     })
+    console.log("COOKIE SET");
     return tokens
 }
