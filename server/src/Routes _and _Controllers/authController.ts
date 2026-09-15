@@ -81,6 +81,7 @@ const login = async (req: Request, res: Response) => {
 const logout = async (req: Request, res: Response) => {
     res.cookie("jwt", "", {
         httpOnly: true,
+        sameSite: "strict",
         expires: new Date(0)
     })
     res.status(200).json({

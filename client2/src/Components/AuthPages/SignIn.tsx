@@ -16,12 +16,8 @@ export default function SignIn() {
         try {
             const signUpUrl = `${baseUrl}/auth/register`;
 
-            const response = await axios.post(signUpUrl, { name, email, password });
+            const response = await axios.post(signUpUrl, { name, email, password }, { withCredentials: true });
             console.log(response.data);
-
-            if (response.data?.token) {
-                localStorage.setItem("token", response.data.token);
-            };
 
             navigate('/posts');
         } catch (error) {

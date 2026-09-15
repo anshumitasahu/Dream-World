@@ -16,12 +16,8 @@ export default function Login() {
         try {
             const loginUrl = `${baseUrl}/auth/login`;
 
-            const response = await axios.post(loginUrl, { email, password })
+            const response = await axios.post(loginUrl, { email, password }, { withCredentials: true })
             console.log(response.data);
-
-            if (response.data?.token) {
-                localStorage.setItem("token", response.data.token);
-            }
 
             navigate("/posts");
         } catch (error) {
