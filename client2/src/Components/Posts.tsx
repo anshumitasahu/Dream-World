@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import CreatePost from "./CreatePosts";
+import Comments from "./Comments";
 
-const baseUrl = "http://localhost:3000"
+const baseUrl = "http://localhost:3000";
 
 interface Author {
     id: string;
@@ -28,10 +29,10 @@ export default function Posts() {
                 setPosts(response.data.data);
             } else {
                 setError("Could not load posts");
-            }
+            };
         } catch (error) {
             console.error(error);
-            setError("Something went wrong fetching posts")
+            setError("Something went wrong fetching posts");
         } finally {
             setLoading(false);
         }
@@ -39,7 +40,7 @@ export default function Posts() {
 
     useEffect(() => {
         fetchPosts();
-    }, [])
+    }, []);
 
     if (loading) return <div className="text-white">loading...</div>
     if (error) return <div className="text-red-500">{error}</div>
@@ -66,6 +67,9 @@ export default function Posts() {
                             </div>
                             <div >
                                 {post.content}
+                            </div>
+                            <div>
+                                <Comments postId={post.id} />
                             </div>
                         </div>
                     ))}

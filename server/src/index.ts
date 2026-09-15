@@ -43,6 +43,7 @@ import cors from 'cors';
 import postRoutes from "./Routes _and _Controllers/PostRoute";
 import authRoutes from "./Routes _and _Controllers/authRoutes";
 import cookieParser from "cookie-parser"
+import CommentRoutes from "./Routes _and _Controllers/CommentsRoute";
 
 const app = express();
 app.use(express.json());
@@ -54,6 +55,7 @@ app.use(cors({
 app.use(cookieParser());
 app.use('/posts', postRoutes);
 app.use('/auth', authRoutes);
+app.use("/posts/:postId/comments", CommentRoutes)
 
 const port = 3000
 const server = app.listen(port, () => {
