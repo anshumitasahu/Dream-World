@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link, useNavigation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
 
 const baseUrl = "http://localhost:3000"
@@ -8,13 +8,27 @@ const baseUrl = "http://localhost:3000"
 export default function Login() {
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
+    const [error, setError] = useState<string>();
+    const navigate = useNavigate();
 
     const handleLogIn = async () => {
         console.log("clicked")
-        const loginUrl = `${baseUrl}/auth/login`;
+        try {
+            const loginUrl = `${baseUrl}/auth/login`;
 
-        const response = await axios.post(loginUrl, { email, password })
-        console.log(response.data)
+            const response = await axios.post(loginUrl, { email, password })
+            console.log(response.data);
+
+            if (response.data?.token) {
+                localStorage.setItem("token", response.data.token);
+            }
+
+            navigate("/posts");
+        } catch (error) {
+            console.error(error);
+            setError('Invalid email or password');
+        }
+
     }
 
     return (
@@ -54,6 +68,7 @@ export default function Login() {
                     <button className="bg-black text-white p-2 rounded-4xl mt-4 w-full" onClick={handleLogIn}>
                         Log in
                     </button>
+                    {error && <div className="text-red-500 text-xs">{error}</div>}
                 </div>
                 <div>
                     <img src="/si-4.png" alt="" className="rounded-4xl h-120 w-100 object-cover" />

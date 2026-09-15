@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 const baseUrl = "http://localhost:3000"
 
@@ -8,13 +8,25 @@ export default function SignIn() {
     const [name, setName] = useState<string>();
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
+    const [error, setError] = useState<string>();
+    const navigate = useNavigate();
 
     const handleSignIn = async () => {
         console.log("clicked")
-        const signUpUrl = `${baseUrl}/auth/register`;
+        try {
+            const signUpUrl = `${baseUrl}/auth/register`;
 
-        const response = await axios.post(signUpUrl, { name, email, password })
-        console.log(response.data)
+            const response = await axios.post(signUpUrl, { name, email, password });
+            console.log(response.data);
+
+            if (response.data?.token) {
+                localStorage.setItem("token", response.data.token);
+            };
+
+            navigate('/posts');
+        } catch (error) {
+            setError("Could not create account");
+        }
     }
 
     return (
