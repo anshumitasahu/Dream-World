@@ -7,7 +7,6 @@ import type { Response, Request } from "express";
 const router = express.Router({ mergeParams: true });
 
 router.get("/", async (req: Request<{ postId: string }>, res: Response) => {
-
     const { postId } = req.params;
 
     const Comment = await prisma.comment.findMany({
