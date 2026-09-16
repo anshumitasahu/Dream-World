@@ -6,7 +6,7 @@ import type { Request, Response } from "express";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", async (req: Request<{ postId: string }>, res: Response) => {
+router.get("/", authMiddleware, async (req: Request<{ postId: string }>, res: Response) => {
     const { postId } = req.params;
 
     const like = await prisma.like.findMany({
@@ -43,7 +43,6 @@ router.delete("/", authMiddleware, async (req: Request<{ postId: string }>, res:
     return res.status(200).json({
         success: true,
         message: "like deleted successfully",
-
     })
 })
 

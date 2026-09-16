@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CreatePost from "./CreatePosts";
 import Comments from "./Comments";
 import Likes from "./Likes";
+import Follow from "./Follow";
 
 const baseUrl = "http://localhost:4000";
 
@@ -61,18 +62,21 @@ export default function Posts() {
                 <div className="flex flex-col gap-5">
                     {posts.map((post) => (
                         <div key={post.id} className="border border-neutral-800 p-3 rounded-xl flex flex-col gap-5">
-                            <div className="flex gap-3">
-                                <img src="/si-1.jpg" className="w-12 rounded-full" />
-                                <div>
-                                    <div className="text-white text-md">
-                                        {post.author.name}
-                                    </div>
-                                    <div className="text-xs text-neutral-500">
-                                        {post.author.id}
+                            <div className="flex justify-between items-center">
+                                <div className="flex gap-3">
+                                    <img src="/si-1.jpg" className="w-12 rounded-full" />
+                                    <div>
+                                        <div className="text-white text-md">
+                                            {post.author.name}
+                                        </div>
+                                        <div className="text-xs text-neutral-500">
+                                            {post.author.id}
+                                        </div>
                                     </div>
                                 </div>
+                                <Follow userId={post.author.id} />
                             </div>
-                            <div >
+                            <div>
                                 {post.content}
                             </div>
                             <div className="flex justify-between">

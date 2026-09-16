@@ -45,6 +45,7 @@ import authRoutes from "./Routes _and _Controllers/authRoutes";
 import cookieParser from "cookie-parser"
 import CommentRoutes from "./Routes _and _Controllers/CommentsRoute";
 import LikesRouter from './Routes _and _Controllers/LikeRoutes';
+import FollowRouter from './Routes _and _Controllers/FollowRoutes';
 
 const app = express();
 app.use(express.json());
@@ -58,8 +59,9 @@ app.use('/posts', postRoutes);
 app.use('/auth', authRoutes);
 app.use("/posts/:postId/comments", CommentRoutes);
 app.use("/posts/:postId/likes", LikesRouter)
+app.use("/users/:userId/follow", FollowRouter)
 
 const port = 4000
 const server = app.listen(port, () => {
-    console.log("server running on 4000")
+    console.log("server running on 4000");
 });
