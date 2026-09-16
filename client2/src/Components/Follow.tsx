@@ -6,7 +6,7 @@ const baseUrl = "http://localhost:4000";
 interface FollowProps {
     userId: string;
     initialIsFollowing?: boolean;
-}
+};
 
 export default function Follow({ userId, initialIsFollowing = false }: FollowProps) {
     const isFollowing = useStore((s) => s.following[userId] ?? initialIsFollowing);
@@ -23,18 +23,20 @@ export default function Follow({ userId, initialIsFollowing = false }: FollowPro
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
-                }
+                },
             });
 
             if (!res.ok) {
                 const data = await res.json().catch(() => ({}));
                 throw new Error(data?.error || "user is being followed");
-            }
+            };
 
             setFollowing(userId, true);
-        } catch (error) {
+        }
+        catch (error) {
             setError(error instanceof Error ? error.message : "Something went wrong");
-        } finally {
+        }
+        finally {
             setLoading(false);
         }
     };
@@ -48,13 +50,13 @@ export default function Follow({ userId, initialIsFollowing = false }: FollowPro
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
-                }
+                },
             });
 
             if (!res.ok) {
                 const data = await res.json().catch(() => ({}));
                 throw new Error(data?.error || "Failed to unfollow user");
-            }
+            };
 
             setFollowing(userId, false);
         } catch (error) {
@@ -74,14 +76,25 @@ export default function Follow({ userId, initialIsFollowing = false }: FollowPro
         <div>
             <button
                 onClick={handleClick}
-                className="bg-white text-black px-2 rounded-md"
+                className="cursor-pointer text-sm"
+                disabled={loading}
             >
-                {loading ? "..." : isFollowing ? "Following" : "Follow"}
+                {loading ? (
+                    "..."
+                ) : isFollowing ? (
+                    <div className="group border border-neutral-600 bg-black text-white px-2.5 py-1.5 rounded-full hover:text-red-400">
+                        <span className="group-hover:hidden">Following</span>
+                        <span className="hidden group-hover:block">Unfollow</span>
+                    </div>
+                ) : (
+                    <div className="px-2.5 py-1.5 hover:bg-white/90 bg-white text-black rounded-full">Follow</div>
+                )}
             </button>
             <div>
                 {error && <p style={{ color: "red" }} className="text-xs">{error}</p>}
             </div>
         </div>
     )
+
 }
 

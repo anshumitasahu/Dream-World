@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, ChatCircleIcon } from "@phosphor-icons/react";
+import { ArrowLeftIcon, ChatCircleIcon, PaperPlaneRightIcon, SpinnerGapIcon } from "@phosphor-icons/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -7,25 +7,25 @@ const baseUrl = "http://localhost:4000";
 interface CommentAuthor {
     id: string;
     name: string;
-}
+};
 
 interface Comment {
     id: string;
     content: string;
     user: CommentAuthor
-}
+};
 
 interface CommentsProps {
     postId: string
-}
+};
 
 export default function Comments({ postId }: CommentsProps) {
     const [comments, setComments] = useState<Comment[]>([]);
-    const [loading, setLoading] = useState<boolean>(true)
+    const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>("");
     const [newComment, setNewComment] = useState<string>("");
     const [submitting, setSubmitting] = useState<boolean>(false);
-    const [commentsDisplayed, setCommentsDisplayed] = useState<boolean>(false)
+    const [commentsDisplayed, setCommentsDisplayed] = useState<boolean>(false);
 
     const fetchComments = async () => {
         try {
@@ -34,13 +34,15 @@ export default function Comments({ postId }: CommentsProps) {
                 setComments(response.data.data);
             } else {
                 setError("Could not load comments")
-            }
-        } catch (error) {
-            console.error(error);
-            setError("Something went wrong fetching comments :(")
-        } finally {
-            setLoading(false);
+            };
         }
+        catch (error) {
+            console.error(error);
+            setError("Something went wrong fetching comments :(");
+        }
+        finally {
+            setLoading(false);
+        };
     };
 
     useEffect(() => {
@@ -61,18 +63,20 @@ export default function Comments({ postId }: CommentsProps) {
                 setNewComment("");
                 fetchComments();
             }
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setSubmitting(false);
         }
+        catch (error) {
+            console.error(error);
+        }
+        finally {
+            setSubmitting(false);
+        };
     };
 
     const handleCommentToggle = () => {
         setCommentsDisplayed(prev => !prev);
-    }
+    };
 
-    if (loading) return <div className="text-neutral-500 text-sm">loading comments...</div>;
+    if (loading) return <div className="text-neutral-500 text-sm"><SpinnerGapIcon /></div>;
     if (error) return <div className="text-red-500 text-sm">{error}</div>;
 
     return (
@@ -93,22 +97,25 @@ export default function Comments({ postId }: CommentsProps) {
             }
 
             {commentsDisplayed && (
-                <div>
-                    <form onSubmit={handleSubmit} className="flex gap-2">
+                < div >
+                    <div
+                        className="flex gap-3 justify-center items-center">
                         <input
                             value={newComment}
                             onChange={(e) => setNewComment(e.target.value)}
                             placeholder="Write a comment..."
-                            className="flex-1 bg-neutral-900 border border-neutral-800 rounded-lg px-3 py-1 text-sm text-white outline-none mb-3"
+                            className="bg-neutral-900 border border-neutral-800 rounded-lg p-2 text-sm text-white outline-none mb-3"
                         />
                         <button
+                            onClick={handleSubmit}
                             type="submit"
                             disabled={submitting}
-                            className="text-sm px-3 py-1 rounded-lg bg-neutral-800 text-white disabled:opacity-50"
+                            className="p-3 rounded-lg bg-neutral-800 text-white disabled:opacity-50 mb-3"
                         >
-                            {submitting ? "..." : "Post"}
+                            {submitting ? <SpinnerGapIcon size={20} /> : <PaperPlaneRightIcon size={20} />}
                         </button>
-                    </form>
+                    </div>
+
 
                     <div className="flex flex-col gap-2">
                         {comments.map((comment) => (
@@ -119,7 +126,8 @@ export default function Comments({ postId }: CommentsProps) {
                         ))}
                     </div>
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 }

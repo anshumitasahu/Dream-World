@@ -35,7 +35,7 @@ export default function Likes({ postId, initialLiked, initialCount }: Props) {
     };
 
     return (
-        <button onClick={handleLikeToggle} disabled={pending} className="cursor-pointer flex items-center gap-1">
+        <button onClick={handleLikeToggle} disabled={pending} className="cursor-pointer flex items-center gap-1 hover:text-red-200">
             <HeartIcon weight={isLiked ? "fill" : "regular"} />
             <span>{count}</span>
         </button>
