@@ -5,19 +5,22 @@ import { Posts } from "./PostController"
 
 const router = express.Router()
 
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
+    console.log("req.user in route:", req.user);
+    const userId = req.user?.id;
     const Post = await prisma.post.findMany({
         select: {
             id: true,
             content: true,
             createdAt: true,
-            author: {
-                select: {
-                    id: true,
-                    name: true
-                }
-            }
-        }
+            author: { select: { id: true, name: true } },
+            _count: { select: { likes: true } },
+            likes: {
+                where: { userId: userId! },
+                select: { id: true },
+                take: 1,
+            },
+        },
     });
     return res.status(200).json({
         success: true,

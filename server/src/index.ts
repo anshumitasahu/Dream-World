@@ -59,7 +59,7 @@ app.use('/auth', authRoutes);
 app.use("/posts/:postId/comments", CommentRoutes);
 app.use("/posts/:postId/likes", LikesRouter)
 
-const port = 3000
+const port = 4000
 const server = app.listen(port, () => {
-    console.log("server running on 3000")
+    console.log("server running on 4000")
 });

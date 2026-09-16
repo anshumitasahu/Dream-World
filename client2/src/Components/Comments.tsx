@@ -1,7 +1,8 @@
+import { ArrowLeftIcon, ChatCircleIcon } from "@phosphor-icons/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const baseUrl = "http://localhost:3000";
+const baseUrl = "http://localhost:4000";
 
 interface CommentAuthor {
     id: string;
@@ -24,6 +25,7 @@ export default function Comments({ postId }: CommentsProps) {
     const [error, setError] = useState<string>("");
     const [newComment, setNewComment] = useState<string>("");
     const [submitting, setSubmitting] = useState<boolean>(false);
+    const [commentsDisplayed, setCommentsDisplayed] = useState<boolean>(false)
 
     const fetchComments = async () => {
         try {
@@ -66,35 +68,58 @@ export default function Comments({ postId }: CommentsProps) {
         }
     };
 
+    const handleCommentToggle = () => {
+        setCommentsDisplayed(prev => !prev);
+    }
+
     if (loading) return <div className="text-neutral-500 text-sm">loading comments...</div>;
     if (error) return <div className="text-red-500 text-sm">{error}</div>;
 
     return (
         <div>
-            <form onSubmit={handleSubmit} className="flex gap-2">
-                <input
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    placeholder="Write a comment..."
-                    className="flex-1 bg-neutral-900 border border-neutral-800 rounded-lg px-3 py-1 text-sm text-white outline-none"
-                />
+            {commentsDisplayed ?
                 <button
-                    type="submit"
-                    disabled={submitting}
-                    className="text-sm px-3 py-1 rounded-lg bg-neutral-800 text-white disabled:opacity-50"
+                    onClick={handleCommentToggle} className="cursor-pointer"
                 >
-                    {submitting ? "..." : "Post"}
+                    <ArrowLeftIcon />
                 </button>
-            </form>
+                :
+                <button
+                    onClick={handleCommentToggle}
+                    className="cursor-pointer"
+                >
+                    <ChatCircleIcon />
+                </button>
+            }
 
-            <div className="flex flex-col gap-2">
-                {comments.map((comment) => (
-                    <div key={comment.id} className="flex gap-2 text-sm">
-                        <span className="text-white">{comment.user.name}</span>
-                        <span className="text-neutral-400">{comment.content}</span>
+            {commentsDisplayed && (
+                <div>
+                    <form onSubmit={handleSubmit} className="flex gap-2">
+                        <input
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                            placeholder="Write a comment..."
+                            className="flex-1 bg-neutral-900 border border-neutral-800 rounded-lg px-3 py-1 text-sm text-white outline-none mb-3"
+                        />
+                        <button
+                            type="submit"
+                            disabled={submitting}
+                            className="text-sm px-3 py-1 rounded-lg bg-neutral-800 text-white disabled:opacity-50"
+                        >
+                            {submitting ? "..." : "Post"}
+                        </button>
+                    </form>
+
+                    <div className="flex flex-col gap-2">
+                        {comments.map((comment) => (
+                            <div key={comment.id} className="flex gap-2 text-sm">
+                                <span className="text-white">{comment.user.name}</span>
+                                <span className="text-neutral-400">{comment.content}</span>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
+                </div>
+            )}
         </div>
     );
 }

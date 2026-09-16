@@ -2,8 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import CreatePost from "./CreatePosts";
 import Comments from "./Comments";
+import Likes from "./Likes";
 
-const baseUrl = "http://localhost:3000";
+const baseUrl = "http://localhost:4000";
 
 interface Author {
     id: string;
@@ -15,6 +16,12 @@ interface Post {
     content: string;
     createdAt: string;
     author: Author;
+    _count: {
+        likes: number;
+    };
+    likes: {
+        id: string;
+    }[];
 }
 
 export default function Posts() {
@@ -68,8 +75,15 @@ export default function Posts() {
                             <div >
                                 {post.content}
                             </div>
-                            <div>
-                                <Comments postId={post.id} />
+                            <div className="flex justify-between">
+                                <div>
+                                    <Likes postId={post.id}
+                                        initialLiked={post.likes.length > 0}
+                                        initialCount={post._count.likes} />
+                                </div>
+                                <div>
+                                    <Comments postId={post.id} />
+                                </div>
                             </div>
                         </div>
                     ))}

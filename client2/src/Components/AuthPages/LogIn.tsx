@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
 
-const baseUrl = "http://localhost:3000"
+const baseUrl = "http://localhost:4000"
 
 export default function Login() {
     const [email, setEmail] = useState<string>();

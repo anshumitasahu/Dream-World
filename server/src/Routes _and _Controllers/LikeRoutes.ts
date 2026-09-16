@@ -4,19 +4,25 @@ import { authMiddleware } from "../MiddleWares/authMiddleware";
 import { Likes } from "./LikeController";
 import type { Request, Response } from "express";
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.get("/", async (req: Request<{ postId: string }>, res: Response) => {
     const { postId } = req.params;
 
     const like = await prisma.like.findMany({
         where: { postId },
-    })
+        select: {
+            id: true,
+            createdAt: true,
+            user: { select: { id: true, name: true } },
+        },
+    });
 
     return res.status(200).json({
         success: true,
         message: "likes fetched successfully",
-        data: like
+        data: like,
+        count: like.length
     })
 })
 
@@ -26,12 +32,11 @@ router.delete("/", authMiddleware, async (req: Request<{ postId: string }>, res:
     const { postId } = req.params;
     const userId = req.user?.id;
 
-    await prisma.like.delete({
-        where: {
-            userId_postId: {
-                userId: userId!,
-                postId
-            }
+    await prisma.like.deleteMany({
+        where:
+        {
+            userId: userId!,
+            postId
         }
     })
 
