@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useStore } from "../store";
 
 const baseUrl = "http://localhost:4000";
 
@@ -8,7 +9,8 @@ interface FollowProps {
 }
 
 export default function Follow({ userId, initialIsFollowing = false }: FollowProps) {
-    const [isFollowing, setIsFollowing] = useState(initialIsFollowing);
+    const isFollowing = useStore((s) => s.following[userId] ?? initialIsFollowing);
+    const setFollowing = useStore((s) => s.setFollowing);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -29,7 +31,7 @@ export default function Follow({ userId, initialIsFollowing = false }: FollowPro
                 throw new Error(data?.error || "user is being followed");
             }
 
-            setIsFollowing(true);
+            setFollowing(userId, true);
         } catch (error) {
             setError(error instanceof Error ? error.message : "Something went wrong");
         } finally {
@@ -54,7 +56,7 @@ export default function Follow({ userId, initialIsFollowing = false }: FollowPro
                 throw new Error(data?.error || "Failed to unfollow user");
             }
 
-            setIsFollowing(false);
+            setFollowing(userId, false);
         } catch (error) {
             setError(error instanceof Error ? error.message : "Something went wrong");
         } finally {
