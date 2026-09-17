@@ -20,6 +20,13 @@ router.get("/", authMiddleware, async (req: Request, res: Response) => {
             bio: true,
             profilePicture: true,
             coverPicture: true,
+            posts: {
+                select: {
+                    id: true,
+                    content: true,
+                    createdAt: true
+                }
+            },
             following: {
                 select: {
                     following: {
@@ -60,15 +67,15 @@ router.get("/", authMiddleware, async (req: Request, res: Response) => {
 
 router.post("/", authMiddleware, UserProfile);
 
-router.patch("/",authMiddleware, async (req: Request, res: Response) => {
+router.patch("/", authMiddleware, async (req: Request, res: Response) => {
 
     const userId = req.user?.id;
     console.log(userId)
-    
+
     if (!userId) {
         return res.status(400).json({ error: "Invalid user" });
     }
-    
+
     try {
         const userProfile = await prisma.user.update({
             where: { id: userId },

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import SideBar from "../SideBar/SideBar";
+import { SpinnerGapIcon } from "@phosphor-icons/react";
 
 interface UserSummary {
     id: string;
@@ -14,6 +15,7 @@ interface UserProfileData {
     bio: string | null;
     profilePicture: string | null;
     coverPicture: string | null;
+    post: string;
     following: { following: UserSummary }[];
     follower: { follower: UserSummary }[];
     _count: {
@@ -28,8 +30,6 @@ export default function UserProfile() {
     const [profile, setProfile] = useState<UserProfileData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-    // Edit mode state
     const [isEditing, setIsEditing] = useState(false);
     const [saving, setSaving] = useState(false);
     const [form, setForm] = useState({
@@ -136,114 +136,133 @@ export default function UserProfile() {
     }
 
     return (
-        <div className="profile-container text-white">
-            <div>
+        <div className="bg-black text-white w-screen h-screen p-2 overflow-scroll flex gap-2">
+            <div className="text-white w-70 h-full border-r border-r-neutral-600">
                 <SideBar />
             </div>
-            <div
-                className="profile-cover"
-                style={{
-                    backgroundImage: profile.coverPicture
-                        ? `url(${profile.coverPicture})`
-                        : undefined,
-                }}
-            >
-                <img
-                    className="profile-avatar"
-                    src={profile.profilePicture || "/default-avatar.png"}
-                    alt={`${profile.name}'s avatar`}
-                />
-            </div>
+            <div className="w-full">
+                <div
+                    className="w-full h-60 relative"
+                >
+                    <img
+                        src={profile.coverPicture || "/banner.jpg"}
+                        className="w-full h-60 object-cover"
+                    />
+                    <img
+                        className="w-35 rounded-full z-10 absolute bottom-0 left-6 translate-y-1/2 object cover border-6 border-black"
+                        src={profile.profilePicture || "/user.jpg"}
+                        alt={`${profile.name}'s avatar`}
+                    />
 
-            <div className="profile-body">
-                {!isEditing ? (
-                    <>
-                        <h1>{profile.name}</h1>
-                        <p className="profile-username">@{profile.username}</p>
-                        {profile.bio && <p className="profile-bio">{profile.bio}</p>}
+                    <div className="w-full text-right mt-3">
+                        <button onClick={() => setIsEditing(true)} className="border border-neutral-500 px-4 py-1.5 rounded-full mr-5 cursor-pointer">Edit Profile</button>
+                    </div>
+                </div>
 
-                        <div className="profile-counts">
-                            <span>
-                                <strong>{profile._count.following}</strong> Following
-                            </span>
-                            <span>
-                                <strong>{profile._count.follower}</strong> Followers
-                            </span>
+                <div className="w-full mt-20">
+                    {!isEditing ? (
+                        <>
+                            <h1 className="text-xl font-semibold">{profile.name}</h1>
+                            <p className="text-sm text-neutral-500">{profile.username}</p>
+                            {profile.bio && <p className="mt-5">{profile.bio}</p>}
+
+                            <div className="flex gap-6 mt-2">
+                                <div>
+                                    <p className="font-bold">{profile._count.following} <span className="text-neutral-500 font-normal text-sm">Following</span></p>
+                                </div>
+                                <div>
+                                    <p className="font-bold">{profile._count.follower} <span className="text-neutral-500 font-normal text-sm">Followers</span></p>
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        <div className="flex flex-col gap-3 border border-neutral-600 rounded-lg p-3 ">
+                            <div className=" flex gap-3 items-center px-2">
+                                <div>
+                                    Name:
+                                </div>
+                                <input
+                                    className="outline-0 border border-neutral-600 rounded-full px-3 py-1 hover:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-amber-200"
+                                    value={form.name}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className=" flex gap-3 items-center px-2">
+                                <div>
+                                    Bio:
+                                </div>
+                                <textarea
+                                    className="outline-0 border border-neutral-600 rounded-xl px-3 py-1 hover:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-amber-200 resize-none"
+                                    value={form.bio}
+                                    onChange={handleChange}
+                                    rows={3}
+                                />
+                            </div>
+
+                            <div className=" flex gap-3 items-center px-2">
+                                <div>
+                                    Profile Picture URL:
+                                </div>
+                                <input
+                                    className="outline-0 border border-neutral-600 rounded-xl px-3 py-1 hover:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-amber-200 resize-none"
+                                    value={form.profilePicture}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className=" flex gap-3 items-center px-2">
+                                <div>
+                                    Cover Picture URL:
+                                </div>
+                                <input
+                                    className="outline-0 border border-neutral-600 rounded-xl px-3 py-1 hover:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-amber-200 resize-none"
+                                    value={form.coverPicture}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className="flex gap-6">
+                                <button
+                                    onClick={handleSave}
+                                    disabled={saving}
+                                    className="border border-neutral-500 px-4 py-1.5 rounded-full mr-5 cursor-pointer hover:border-amber-200"
+                                >
+                                    {saving ? <SpinnerGapIcon /> : "Save"}
+                                </button>
+                                <button
+                                    onClick={handleCancel}
+                                    disabled={saving}
+                                    className="border border-neutral-500 px-4 py-1.5 rounded-full mr-5 cursor-pointer hover:bg-amber-200 hover:text-black"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="">
+                        <div>
+                            <h3>Following</h3>
+                            <ul>
+                                {profile.following.map(({ following }) => (
+                                    <li key={following.id}>
+                                        {following.name} (@{following.username})
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
 
-                        <button onClick={() => setIsEditing(true)}>Edit Profile</button>
-                    </>
-                ) : (
-                    <div className="profile-edit-form">
-                        <label>
-                            Name
-                            <input
-                                name="name"
-                                value={form.name}
-                                onChange={handleChange}
-                            />
-                        </label>
-
-                        <label>
-                            Bio
-                            <textarea
-                                name="bio"
-                                value={form.bio}
-                                onChange={handleChange}
-                                rows={3}
-                            />
-                        </label>
-
-                        <label>
-                            Profile Picture URL
-                            <input
-                                name="profilePicture"
-                                value={form.profilePicture}
-                                onChange={handleChange}
-                            />
-                        </label>
-
-                        <label>
-                            Cover Picture URL
-                            <input
-                                name="coverPicture"
-                                value={form.coverPicture}
-                                onChange={handleChange}
-                            />
-                        </label>
-
-                        <div className="profile-edit-actions">
-                            <button onClick={handleSave} disabled={saving}>
-                                {saving ? "Saving..." : "Save"}
-                            </button>
-                            <button onClick={handleCancel} disabled={saving}>
-                                Cancel
-                            </button>
+                        <div>
+                            <h3>Followers</h3>
+                            <ul>
+                                {profile.follower.map(({ follower }) => (
+                                    <li key={follower.id}>
+                                        {follower.name} (@{follower.username})
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
-                    </div>
-                )}
-
-                <div className="profile-lists">
-                    <div>
-                        <h3>Following</h3>
-                        <ul>
-                            {profile.following.map(({ following }) => (
-                                <li key={following.id}>
-                                    {following.name} (@{following.username})
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3>Followers</h3>
-                        <ul>
-                            {profile.follower.map(({ follower }) => (
-                                <li key={follower.id}>
-                                    {follower.name} (@{follower.username})
-                                </li>
-                            ))}
-                        </ul>
                     </div>
                 </div>
             </div>

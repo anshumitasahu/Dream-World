@@ -55,12 +55,12 @@ export default function Posts() {
     if (error) return <div className="text-red-500">{error}</div>
 
     return (
-        <div className="bg-black w-screen h-screen p-2 overflow-scroll flex">
-            <div className="text-white">
+        <div className="bg-black w-screen h-screen p-2 overflow-scroll flex gap-2">
+            <div className="text-white w-100 h-full border-r border-r-neutral-600">
                 <SideBar />
             </div>
 
-            <div className="text-white">
+            <div className="text-white p-2">
                 <div className="w-full">
                     <CreatePost onPostCreated={fetchPosts} />
                 </div>

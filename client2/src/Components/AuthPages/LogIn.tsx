@@ -61,7 +61,7 @@ export default function Login() {
                             I agree with the terms and condition
                         </div>
                     </div>
-                    <button className="bg-black text-white p-2 rounded-4xl mt-4 w-full" onClick={handleLogIn}>
+                    <button className="bg-black text-white p-2 rounded-4xl mt-4 w-full cursor-pointer" onClick={handleLogIn}>
                         Log in
                     </button>
                     {error && <div className="text-red-500 text-xs">{error}</div>}

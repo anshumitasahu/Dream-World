@@ -8,13 +8,13 @@ import UserProfile from "./Components/UserProfile";
 export default function App() {
   return (
     <div
-      className="bg-[#001b33] w-screen h-screen flex flex-col items-center justify-center">
+      className="w-screen h-screen flex flex-col items-center justify-center bg-black">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AuthPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/posts" element={<Posts />} />
-          <Route path="/user" element={<UserProfile />} />
+          <Route path="/profile" element={<UserProfile />} />
         </Routes>
       </BrowserRouter>
     </div>
