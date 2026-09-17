@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./Components/AuthPages/LogIn"
 import Posts from "./Components/Posts";
 import UserProfile from "./Components/UserProfile";
+import FollowList from "./Components/Folllowers";
 
 
 export default function App() {
@@ -15,6 +16,8 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/posts" element={<Posts />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/following" element={<FollowList />} />
+          <Route path="/followers" element={<FollowList />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
 import SideBar from "../SideBar/SideBar";
 import { SpinnerGapIcon } from "@phosphor-icons/react";
+import { NavLink } from "react-router-dom";
 
 interface UserSummary {
     id: string;
     name: string;
     username: string;
+}
+
+interface PostSummary {
+    id: string;
+    content: string;
+    createdAt: string;
 }
 
 interface UserProfileData {
@@ -15,7 +22,7 @@ interface UserProfileData {
     bio: string | null;
     profilePicture: string | null;
     coverPicture: string | null;
-    post: string;
+    posts: PostSummary[];
     following: { following: UserSummary }[];
     follower: { follower: UserSummary }[];
     _count: {
@@ -168,10 +175,10 @@ export default function UserProfile() {
 
                             <div className="flex gap-6 mt-2">
                                 <div>
-                                    <p className="font-bold">{profile._count.following} <span className="text-neutral-500 font-normal text-sm">Following</span></p>
+                                    <NavLink to="/following" className="font-bold">{profile._count.following} <span className="text-neutral-500 font-normal text-sm">Following</span></NavLink>
                                 </div>
                                 <div>
-                                    <p className="font-bold">{profile._count.follower} <span className="text-neutral-500 font-normal text-sm">Followers</span></p>
+                                    <NavLink to="/followers" className="font-bold">{profile._count.follower} <span className="text-neutral-500 font-normal text-sm">Followers</span></NavLink>
                                 </div>
                             </div>
                         </>
@@ -182,6 +189,7 @@ export default function UserProfile() {
                                     Name:
                                 </div>
                                 <input
+                                    name="name"
                                     className="outline-0 border border-neutral-600 rounded-full px-3 py-1 hover:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-amber-200"
                                     value={form.name}
                                     onChange={handleChange}
@@ -193,6 +201,7 @@ export default function UserProfile() {
                                     Bio:
                                 </div>
                                 <textarea
+                                    name="bio"
                                     className="outline-0 border border-neutral-600 rounded-xl px-3 py-1 hover:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-amber-200 resize-none"
                                     value={form.bio}
                                     onChange={handleChange}
@@ -205,6 +214,7 @@ export default function UserProfile() {
                                     Profile Picture URL:
                                 </div>
                                 <input
+                                    name="profilePicture"
                                     className="outline-0 border border-neutral-600 rounded-xl px-3 py-1 hover:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-amber-200 resize-none"
                                     value={form.profilePicture}
                                     onChange={handleChange}
@@ -216,6 +226,7 @@ export default function UserProfile() {
                                     Cover Picture URL:
                                 </div>
                                 <input
+                                    name="coverPicture"
                                     className="outline-0 border border-neutral-600 rounded-xl px-3 py-1 hover:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-amber-200 resize-none"
                                     value={form.coverPicture}
                                     onChange={handleChange}
@@ -241,28 +252,25 @@ export default function UserProfile() {
                         </div>
                     )}
 
-                    <div className="">
-                        <div>
-                            <h3>Following</h3>
-                            <ul>
-                                {profile.following.map(({ following }) => (
-                                    <li key={following.id}>
-                                        {following.name} (@{following.username})
+                    <div className="mt-6">
+                        <h3 className="text-lg font-semibold mb-2">Posts</h3>
+                        {profile.posts.length === 0 ? (
+                            <p className="text-neutral-500 text-sm">No posts yet.</p>
+                        ) : (
+                            <ul className="flex flex-col gap-3">
+                                {profile.posts.map((post) => (
+                                    <li
+                                        key={post.id}
+                                        className="border border-neutral-700 rounded-lg p-3"
+                                    >
+                                        <p>{post.content}</p>
+                                        <p className="text-xs text-neutral-500 mt-1">
+                                            {new Date(post.createdAt).toLocaleString()}
+                                        </p>
                                     </li>
                                 ))}
                             </ul>
-                        </div>
-
-                        <div>
-                            <h3>Followers</h3>
-                            <ul>
-                                {profile.follower.map(({ follower }) => (
-                                    <li key={follower.id}>
-                                        {follower.name} (@{follower.username})
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                        )}
                     </div>
                 </div>
             </div>

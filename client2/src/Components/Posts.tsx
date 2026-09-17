@@ -69,7 +69,7 @@ export default function Posts() {
                         <div key={post.id} className="border border-neutral-800 p-3 rounded-xl flex flex-col gap-5">
                             <div className="flex justify-between items-center">
                                 <div className="flex gap-3">
-                                    <img src="/si-1.jpg" className="w-12 rounded-full" />
+                                    <img src="user.jpg" className="w-12 rounded-full" />
                                     <div>
                                         <div className="text-white text-md">
                                             {post.author.name}
