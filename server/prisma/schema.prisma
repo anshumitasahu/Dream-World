@@ -13,75 +13,53 @@ datasource db {
 }
 
 model User {
-  id             String   @id @default(uuid())
-  name           String
-  email          String   @unique
-  password       String
-  username       String   @unique
-  bio            String?
-  profilePicture String?
-  coverPicture   String?
-  createdAt      DateTime @default(now())
+  id        String  @id @default(cuid())
+  email     String  @unique
+  name      String?
+  password  String?
+  googleId  String? @unique
+  avatarUrl String?
 
-  posts     Post[]
-  likes     Like[]
-  comments  Comment[]
-  following Follow[]  @relation("Following")
-  follower  Follow[]  @relation("Follower")
-}
-
-model Post {
-  id        String   @id @default(uuid())
-  content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  authorId String
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
-
-  likes    Like[]
-  comments Comment[]
-
-  @@index([authorId])
-  @@index([createdAt])
+  userDreams UserDream[]
+  userLikes  UserLikes[]
 }
 
-model Like {
-  id        String   @id @default(uuid())
+model Dream {
+  id     String @id @default(cuid())
+  title  String
+  prompt String
+  likes  Int    @default(0)
+
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  userId String
-  postId String
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, postId])
+  userDreams UserDream[]
+  userLikes  UserLikes[]
 }
 
-model Comment {
-  id        String   @id @default(uuid())
-  content   String
+model UserDream {
+  id      String @id @default(cuid())
+  userId  String
+  dreamId String
+
+  user User  @relation(fields: [userId], references: [id])
+  post Dream @relation(fields: [dreamId], references: [id])
+
   createdAt DateTime @default(now())
-
-  userId String
-  postId String
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-
-  @@index([postId])
+  updatedAt DateTime @updatedAt
 }
 
-model Follow {
-  id        String   @id @default(uuid())
+model UserLikes {
+  id      String @id @default(cuid())
+  userId  String
+  dreamId String
+
+  user User  @relation(fields: [userId], references: [id])
+  post Dream @relation(fields: [dreamId], references: [id])
+
   createdAt DateTime @default(now())
-
-  followingId String
-  followerId  String
-
-  follower  User @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
-  following User @relation("Follower", fields: [followingId], references: [id], onDelete: Cascade)
-
-  @@unique([followerId, followingId])
+  updatedAt DateTime @updatedAt
 }

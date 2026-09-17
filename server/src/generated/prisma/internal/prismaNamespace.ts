@@ -398,10 +398,9 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
-  Post: 'Post',
-  Like: 'Like',
-  Comment: 'Comment',
-  Follow: 'Follow'
+  Dream: 'Dream',
+  UserDream: 'UserDream',
+  UserLikes: 'UserLikes'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -417,7 +416,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "post" | "like" | "comment" | "follow"
+    modelProps: "user" | "dream" | "userDream" | "userLikes"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -495,299 +494,225 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Post: {
-      payload: Prisma.$PostPayload<ExtArgs>
-      fields: Prisma.PostFieldRefs
+    Dream: {
+      payload: Prisma.$DreamPayload<ExtArgs>
+      fields: Prisma.DreamFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.PostFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload> | null
+          args: Prisma.DreamFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DreamPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.PostFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+          args: Prisma.DreamFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DreamPayload>
         }
         findFirst: {
-          args: Prisma.PostFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload> | null
+          args: Prisma.DreamFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DreamPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.PostFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+          args: Prisma.DreamFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DreamPayload>
         }
         findMany: {
-          args: Prisma.PostFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>[]
+          args: Prisma.DreamFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DreamPayload>[]
         }
         create: {
-          args: Prisma.PostCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+          args: Prisma.DreamCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DreamPayload>
         }
         createMany: {
-          args: Prisma.PostCreateManyArgs<ExtArgs>
+          args: Prisma.DreamCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.PostCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>[]
+          args: Prisma.DreamCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DreamPayload>[]
         }
         delete: {
-          args: Prisma.PostDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+          args: Prisma.DreamDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DreamPayload>
         }
         update: {
-          args: Prisma.PostUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+          args: Prisma.DreamUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DreamPayload>
         }
         deleteMany: {
-          args: Prisma.PostDeleteManyArgs<ExtArgs>
+          args: Prisma.DreamDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.PostUpdateManyArgs<ExtArgs>
+          args: Prisma.DreamUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.PostUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>[]
+          args: Prisma.DreamUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DreamPayload>[]
         }
         upsert: {
-          args: Prisma.PostUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+          args: Prisma.DreamUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DreamPayload>
         }
         aggregate: {
-          args: Prisma.PostAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregatePost>
+          args: Prisma.DreamAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDream>
         }
         groupBy: {
-          args: Prisma.PostGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PostGroupByOutputType>[]
+          args: Prisma.DreamGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DreamGroupByOutputType>[]
         }
         count: {
-          args: Prisma.PostCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PostCountAggregateOutputType> | number
+          args: Prisma.DreamCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DreamCountAggregateOutputType> | number
         }
       }
     }
-    Like: {
-      payload: Prisma.$LikePayload<ExtArgs>
-      fields: Prisma.LikeFieldRefs
+    UserDream: {
+      payload: Prisma.$UserDreamPayload<ExtArgs>
+      fields: Prisma.UserDreamFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.LikeFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikePayload> | null
+          args: Prisma.UserDreamFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserDreamPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.LikeFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikePayload>
+          args: Prisma.UserDreamFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserDreamPayload>
         }
         findFirst: {
-          args: Prisma.LikeFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikePayload> | null
+          args: Prisma.UserDreamFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserDreamPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.LikeFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikePayload>
+          args: Prisma.UserDreamFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserDreamPayload>
         }
         findMany: {
-          args: Prisma.LikeFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikePayload>[]
+          args: Prisma.UserDreamFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserDreamPayload>[]
         }
         create: {
-          args: Prisma.LikeCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikePayload>
+          args: Prisma.UserDreamCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserDreamPayload>
         }
         createMany: {
-          args: Prisma.LikeCreateManyArgs<ExtArgs>
+          args: Prisma.UserDreamCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.LikeCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikePayload>[]
+          args: Prisma.UserDreamCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserDreamPayload>[]
         }
         delete: {
-          args: Prisma.LikeDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikePayload>
+          args: Prisma.UserDreamDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserDreamPayload>
         }
         update: {
-          args: Prisma.LikeUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikePayload>
+          args: Prisma.UserDreamUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserDreamPayload>
         }
         deleteMany: {
-          args: Prisma.LikeDeleteManyArgs<ExtArgs>
+          args: Prisma.UserDreamDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.LikeUpdateManyArgs<ExtArgs>
+          args: Prisma.UserDreamUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.LikeUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikePayload>[]
+          args: Prisma.UserDreamUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserDreamPayload>[]
         }
         upsert: {
-          args: Prisma.LikeUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LikePayload>
+          args: Prisma.UserDreamUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserDreamPayload>
         }
         aggregate: {
-          args: Prisma.LikeAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateLike>
+          args: Prisma.UserDreamAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserDream>
         }
         groupBy: {
-          args: Prisma.LikeGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.LikeGroupByOutputType>[]
+          args: Prisma.UserDreamGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserDreamGroupByOutputType>[]
         }
         count: {
-          args: Prisma.LikeCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.LikeCountAggregateOutputType> | number
+          args: Prisma.UserDreamCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserDreamCountAggregateOutputType> | number
         }
       }
     }
-    Comment: {
-      payload: Prisma.$CommentPayload<ExtArgs>
-      fields: Prisma.CommentFieldRefs
+    UserLikes: {
+      payload: Prisma.$UserLikesPayload<ExtArgs>
+      fields: Prisma.UserLikesFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.CommentFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentPayload> | null
+          args: Prisma.UserLikesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLikesPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.CommentFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentPayload>
+          args: Prisma.UserLikesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLikesPayload>
         }
         findFirst: {
-          args: Prisma.CommentFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentPayload> | null
+          args: Prisma.UserLikesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLikesPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.CommentFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentPayload>
+          args: Prisma.UserLikesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLikesPayload>
         }
         findMany: {
-          args: Prisma.CommentFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentPayload>[]
+          args: Prisma.UserLikesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLikesPayload>[]
         }
         create: {
-          args: Prisma.CommentCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentPayload>
+          args: Prisma.UserLikesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLikesPayload>
         }
         createMany: {
-          args: Prisma.CommentCreateManyArgs<ExtArgs>
+          args: Prisma.UserLikesCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.CommentCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentPayload>[]
+          args: Prisma.UserLikesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLikesPayload>[]
         }
         delete: {
-          args: Prisma.CommentDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentPayload>
+          args: Prisma.UserLikesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLikesPayload>
         }
         update: {
-          args: Prisma.CommentUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentPayload>
+          args: Prisma.UserLikesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLikesPayload>
         }
         deleteMany: {
-          args: Prisma.CommentDeleteManyArgs<ExtArgs>
+          args: Prisma.UserLikesDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.CommentUpdateManyArgs<ExtArgs>
+          args: Prisma.UserLikesUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.CommentUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentPayload>[]
+          args: Prisma.UserLikesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLikesPayload>[]
         }
         upsert: {
-          args: Prisma.CommentUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentPayload>
+          args: Prisma.UserLikesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLikesPayload>
         }
         aggregate: {
-          args: Prisma.CommentAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateComment>
+          args: Prisma.UserLikesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserLikes>
         }
         groupBy: {
-          args: Prisma.CommentGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CommentGroupByOutputType>[]
+          args: Prisma.UserLikesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserLikesGroupByOutputType>[]
         }
         count: {
-          args: Prisma.CommentCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CommentCountAggregateOutputType> | number
-        }
-      }
-    }
-    Follow: {
-      payload: Prisma.$FollowPayload<ExtArgs>
-      fields: Prisma.FollowFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.FollowFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.FollowFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>
-        }
-        findFirst: {
-          args: Prisma.FollowFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.FollowFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>
-        }
-        findMany: {
-          args: Prisma.FollowFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>[]
-        }
-        create: {
-          args: Prisma.FollowCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>
-        }
-        createMany: {
-          args: Prisma.FollowCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.FollowCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>[]
-        }
-        delete: {
-          args: Prisma.FollowDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>
-        }
-        update: {
-          args: Prisma.FollowUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>
-        }
-        deleteMany: {
-          args: Prisma.FollowDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.FollowUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.FollowUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>[]
-        }
-        upsert: {
-          args: Prisma.FollowUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FollowPayload>
-        }
-        aggregate: {
-          args: Prisma.FollowAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateFollow>
-        }
-        groupBy: {
-          args: Prisma.FollowGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.FollowGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.FollowCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.FollowCountAggregateOutputType> | number
+          args: Prisma.UserLikesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserLikesCountAggregateOutputType> | number
         }
       }
     }
@@ -832,59 +757,50 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  name: 'name',
   email: 'email',
+  name: 'name',
   password: 'password',
-  username: 'username',
-  bio: 'bio',
-  profilePicture: 'profilePicture',
-  coverPicture: 'coverPicture',
-  createdAt: 'createdAt'
+  googleId: 'googleId',
+  avatarUrl: 'avatarUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const PostScalarFieldEnum = {
+export const DreamScalarFieldEnum = {
   id: 'id',
-  content: 'content',
+  title: 'title',
+  prompt: 'prompt',
+  likes: 'likes',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  authorId: 'authorId'
+  updatedAt: 'updatedAt'
 } as const
 
-export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+export type DreamScalarFieldEnum = (typeof DreamScalarFieldEnum)[keyof typeof DreamScalarFieldEnum]
 
 
-export const LikeScalarFieldEnum = {
+export const UserDreamScalarFieldEnum = {
   id: 'id',
-  createdAt: 'createdAt',
   userId: 'userId',
-  postId: 'postId'
+  dreamId: 'dreamId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type LikeScalarFieldEnum = (typeof LikeScalarFieldEnum)[keyof typeof LikeScalarFieldEnum]
+export type UserDreamScalarFieldEnum = (typeof UserDreamScalarFieldEnum)[keyof typeof UserDreamScalarFieldEnum]
 
 
-export const CommentScalarFieldEnum = {
+export const UserLikesScalarFieldEnum = {
   id: 'id',
-  content: 'content',
-  createdAt: 'createdAt',
   userId: 'userId',
-  postId: 'postId'
-} as const
-
-export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
-
-
-export const FollowScalarFieldEnum = {
-  id: 'id',
+  dreamId: 'dreamId',
   createdAt: 'createdAt',
-  followingId: 'followingId',
-  followerId: 'followerId'
+  updatedAt: 'updatedAt'
 } as const
 
-export type FollowScalarFieldEnum = (typeof FollowScalarFieldEnum)[keyof typeof FollowScalarFieldEnum]
+export type UserLikesScalarFieldEnum = (typeof UserLikesScalarFieldEnum)[keyof typeof UserLikesScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -956,6 +872,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -1110,10 +1040,9 @@ export interface PrismaClientOptionsWithAdapter extends PrismaClientBaseOptions 
 export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaClientOptionsWithAdapter
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
-  post?: Prisma.PostOmit
-  like?: Prisma.LikeOmit
-  comment?: Prisma.CommentOmit
-  follow?: Prisma.FollowOmit
+  dream?: Prisma.DreamOmit
+  userDream?: Prisma.UserDreamOmit
+  userLikes?: Prisma.UserLikesOmit
 }
 
 /* Types for Logging */

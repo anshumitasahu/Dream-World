@@ -52,10 +52,9 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Post: 'Post',
-  Like: 'Like',
-  Comment: 'Comment',
-  Follow: 'Follow'
+  Dream: 'Dream',
+  UserDream: 'UserDream',
+  UserLikes: 'UserLikes'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -76,59 +75,50 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  name: 'name',
   email: 'email',
+  name: 'name',
   password: 'password',
-  username: 'username',
-  bio: 'bio',
-  profilePicture: 'profilePicture',
-  coverPicture: 'coverPicture',
-  createdAt: 'createdAt'
+  googleId: 'googleId',
+  avatarUrl: 'avatarUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const PostScalarFieldEnum = {
+export const DreamScalarFieldEnum = {
   id: 'id',
-  content: 'content',
+  title: 'title',
+  prompt: 'prompt',
+  likes: 'likes',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  authorId: 'authorId'
+  updatedAt: 'updatedAt'
 } as const
 
-export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+export type DreamScalarFieldEnum = (typeof DreamScalarFieldEnum)[keyof typeof DreamScalarFieldEnum]
 
 
-export const LikeScalarFieldEnum = {
+export const UserDreamScalarFieldEnum = {
   id: 'id',
-  createdAt: 'createdAt',
   userId: 'userId',
-  postId: 'postId'
+  dreamId: 'dreamId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type LikeScalarFieldEnum = (typeof LikeScalarFieldEnum)[keyof typeof LikeScalarFieldEnum]
+export type UserDreamScalarFieldEnum = (typeof UserDreamScalarFieldEnum)[keyof typeof UserDreamScalarFieldEnum]
 
 
-export const CommentScalarFieldEnum = {
+export const UserLikesScalarFieldEnum = {
   id: 'id',
-  content: 'content',
-  createdAt: 'createdAt',
   userId: 'userId',
-  postId: 'postId'
-} as const
-
-export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
-
-
-export const FollowScalarFieldEnum = {
-  id: 'id',
+  dreamId: 'dreamId',
   createdAt: 'createdAt',
-  followingId: 'followingId',
-  followerId: 'followerId'
+  updatedAt: 'updatedAt'
 } as const
 
-export type FollowScalarFieldEnum = (typeof FollowScalarFieldEnum)[keyof typeof FollowScalarFieldEnum]
+export type UserLikesScalarFieldEnum = (typeof UserLikesScalarFieldEnum)[keyof typeof UserLikesScalarFieldEnum]
 
 
 export const SortOrder = {
