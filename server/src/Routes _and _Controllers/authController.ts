@@ -4,7 +4,7 @@ import type { Request, Response } from "express";
 import { generateToken } from "../lib/jwt/index"
 
 const register = async (req: Request, res: Response) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, username } = req.body;
     console.log(req.body);
 
     const userExists = await prisma.user.findUnique({
@@ -25,6 +25,7 @@ const register = async (req: Request, res: Response) => {
             name,
             email,
             password: hashedPassword,
+            username
         },
     });
 
@@ -37,6 +38,7 @@ const register = async (req: Request, res: Response) => {
                 id: user.id,
                 name: name,
                 email: email,
+                username: username
             },
             tokens,
         },

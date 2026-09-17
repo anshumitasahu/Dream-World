@@ -4,7 +4,7 @@ import { PlusCircleIcon, SpinnerGapIcon } from "@phosphor-icons/react";
 
 axios.defaults.withCredentials = true;
 
-const baseUrl = "http://localhost:4000";
+const baseUrl = "http://localhost:3000";
 
 interface CreatePostProps {
     onPostCreated?: () => void;

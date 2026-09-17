@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useStore } from "../store";
 
-const baseUrl = "http://localhost:4000";
+const baseUrl = "http://localhost:3000";
 
 interface FollowProps {
     userId: string;
@@ -97,4 +97,3 @@ export default function Follow({ userId, initialIsFollowing = false }: FollowPro
     )
 
 }
-

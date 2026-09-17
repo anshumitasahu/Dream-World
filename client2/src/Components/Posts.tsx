@@ -4,8 +4,9 @@ import CreatePost from "./CreatePosts";
 import Comments from "./Comments";
 import Likes from "./Likes";
 import Follow from "./Follow";
+import SideBar from "../SideBar/SideBar";
 
-const baseUrl = "http://localhost:4000";
+const baseUrl = "http://localhost:3000";
 
 interface Author {
     id: string;
@@ -54,7 +55,11 @@ export default function Posts() {
     if (error) return <div className="text-red-500">{error}</div>
 
     return (
-        <div className="bg-black w-screen h-screen p-2 overflow-scroll">
+        <div className="bg-black w-screen h-screen p-2 overflow-scroll flex">
+            <div className="text-white">
+                <SideBar />
+            </div>
+
             <div className="text-white">
                 <div className="w-full">
                     <CreatePost onPostCreated={fetchPosts} />

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
 
-const baseUrl = "http://localhost:4000"
+const baseUrl = "http://localhost:3000"
 
 export default function Login() {
     const [email, setEmail] = useState<string>();
@@ -65,9 +65,13 @@ export default function Login() {
                         Log in
                     </button>
                     {error && <div className="text-red-500 text-xs">{error}</div>}
+
+                    <div className="mt-10 text-center text-xl">
+                        Welcome Back!
+                    </div>
                 </div>
                 <div>
-                    <img src="/si-4.png" alt="" className="rounded-4xl h-120 w-100 object-cover" />
+                    <img src="/si-4.png" alt="" className="rounded-4xl h-130 w-100 object-cover" />
                 </div>
             </div>
         </div >

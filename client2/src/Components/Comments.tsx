@@ -2,7 +2,7 @@ import { ArrowLeftIcon, ChatCircleIcon, PaperPlaneRightIcon, SpinnerGapIcon } fr
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const baseUrl = "http://localhost:4000";
+const baseUrl = "http://localhost:3000";
 
 interface CommentAuthor {
     id: string;
@@ -90,7 +90,7 @@ export default function Comments({ postId }: CommentsProps) {
                 :
                 <button
                     onClick={handleCommentToggle}
-                    className="cursor-pointer"
+                    className="cursor-pointer hover:text-blue-300"
                 >
                     <ChatCircleIcon />
                 </button>

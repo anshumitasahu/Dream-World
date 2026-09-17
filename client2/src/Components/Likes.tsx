@@ -21,7 +21,7 @@ export default function Likes({ postId, initialLiked, initialCount }: Props) {
         setPending(true);
 
         try {
-            const res = await fetch(`http://localhost:4000/posts/${postId}/likes`, {
+            const res = await fetch(`http://localhost:3000/posts/${postId}/likes`, {
                 method: next ? "POST" : "DELETE",
                 credentials: "include",
             });

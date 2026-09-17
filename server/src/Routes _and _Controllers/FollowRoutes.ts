@@ -17,7 +17,8 @@ router.get("/", authMiddleware, async (req: Request<{ userId: string }>, res: Re
             follower: {
                 select: {
                     id: true,
-                    name: true
+                    name: true,
+                    username: true
                 },
             }
         }
