@@ -1,5 +1,5 @@
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
-import { useState, type FromEvent } from "react";
+import { useState, type FormEvent } from "react";
 import z from "zod";
 import GoogleSignInButton from "../../components/auth/GoogleSignInButton";
 import { useLogin } from "../../hooks/useAuth";
