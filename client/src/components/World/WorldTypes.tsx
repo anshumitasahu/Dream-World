@@ -25,7 +25,7 @@ export interface OpenGroundConfig {
     size?: number
 };
 
-export interface PresentWorldConfig {
+export interface PresetWorldConfig {
     mode?: 'present'
     map: string
     objects: WorldObjectConfig[]
@@ -39,7 +39,7 @@ export interface OpenWorldConfig {
     objects: WorldObjectConfig[]
 }
 
-export type WorldConfig = PresentWorldConfig | OpenWorldConfig
+export type WorldConfig = PresetWorldConfig | OpenWorldConfig
 
 export function resolvePhysics(config: WorldObjectConfig): 'fixed' | 'decor' {
     return config.physics ?? (config.scatter ? 'decor' : 'fixed')

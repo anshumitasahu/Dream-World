@@ -34,7 +34,7 @@ function mulberry32(seed: number): () => number {
 
 const MAX_SPOT_ATTEMPTS = 30
 
-export function plantScatterSpots({ count, center = [0, 0], radius = 50, spacing = 0, seed }: ScatterPlan): ScatterSpot[] {
+export function planScatterSpots({ count, center = [0, 0], radius = 50, spacing = 0, seed }: ScatterPlan): ScatterSpot[] {
     const rand = mulberry32(hashSeed(seed))
     const spots: ScatterSpot[] = []
     const total = Math.max(0, Math.floor(count))
