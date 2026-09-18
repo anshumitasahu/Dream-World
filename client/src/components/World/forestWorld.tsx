@@ -1,0 +1,56 @@
+import type { WorldConfig } from "./WorldTypes";
+
+const forestWorld: WorldConfig = {
+    "mode": "open",
+    "ground": { "size": 600 },
+    "playerSpawn": [0, 1, 40],
+    "objects": [
+        {
+            "model": "models/tree.glb",
+            "position": [
+                0,
+                0.1,
+                0
+            ],
+            "scale": 10,
+            "scatter": {
+                "count": 35,
+                "center": [
+                    0,
+                    40
+                ],
+                "radius": 40
+            }
+        },
+        {
+            "model": "models/spyro_the_dragon.glb",
+            "position": [
+                -15,
+                0.1,
+                -10
+            ],
+            "rotationY": 1.8
+        },
+        {
+            "model": "models/forest_house.glb",
+            "position": [
+                -15,
+                0.1,
+                -10
+            ],
+            "scale": 200,
+            "rotationY": 1.2
+        },
+        {
+            "model": "models/phoenix_bird.glb",
+            "position": [
+                15,
+                0.1,
+                -3
+            ],
+            "scale": 0.05
+        }
+    ]
+}
+
+export default forestWorld
