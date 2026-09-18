@@ -1,5 +1,5 @@
-import api from "../lib/api";
-import { authResponse, authUser, loginParams, signupParams } from "../sharedTypes/auth/auth.model";
+import api from "../libs/api";
+import type { authResponse, authUser, loginParams, signupParams } from "../sharedTypes/auth/auth.model";
 
 interface apiEnvelope<T> {
     success: boolean;

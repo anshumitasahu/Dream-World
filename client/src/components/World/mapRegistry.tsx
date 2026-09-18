@@ -1,8 +1,8 @@
 import type { ComponentType } from "react";
-import { TestMap, TestMapSpawnZones } from "./TestMap";
+import { TestMap, TestMapSpawnZones } from "../Rendering/map/TestMap";
 import type { SpawnZone, WorldConfig } from './WorldTypes';
 import { OpenPlains, OpenPlainsSpawnZones } from '../Rendering/map/OpenPlains';
-import { StrongHoldAnimated, StrongHoldSpawnZones } from '../Rendering/map/StrongHoldAnimated';
+import { StrongHoldAnimated, StrongHoldSpawnZones } from '../Rendering/map/StrongAnimated';
 
 export interface MapEntry {
     component: ComponentType
@@ -13,7 +13,7 @@ export interface MapEntry {
 export const MAP_REGISTRY: Record<string, MapEntry> = {
     testMap: { component: TestMap, spawnZones: TestMapSpawnZones },
     openPlains: { component: OpenPlains, spawnZones: OpenPlainsSpawnZones },
-    strongHold: { component: StrongHoldAnimated, spawnZones: StrongHoldSpawnZones, myScale: 10 },
+    strongHold: { component: StrongHoldAnimated, spawnZones: StrongHoldSpawnZones, mapScale: 10 },
 };
 
 const PLAYER_SPAWN_CLEARENCE = 1

@@ -3,7 +3,7 @@ import type { ThreeElements } from '@react-three/fiber';
 import { getMapSpawnZones, MAP_REGISTRY } from './mapRegistry';
 import { WorldObject } from './WorldObject';
 import { planScatterSpots } from './scatter';
-import { OpenPlains } from "../ Rendering/map/OpenPlains"
+import { OpenPlains } from "../Rendering/map/OpenPlains"
 import type { OpenWorldConfig, PresetWorldConfig, SpawnZone, WorldConfig } from './WorldTypes';
 
 export function PresetWorld({ config, ...props }: ThreeElements['group'] & { config: PresetWorldConfig }) {
