@@ -1,5 +1,5 @@
 import { useGLTF } from '@react-three/drei';
-import type { ModelParams } from '../../types/types';
+import type { ModelParams } from '../../types/gsi';
 
 export default function ToonnTree({ position, scale, rotation }: ModelParams) {
   const { scene } = useGLTF("/models/tree.glb");
