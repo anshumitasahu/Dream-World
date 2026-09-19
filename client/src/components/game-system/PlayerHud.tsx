@@ -1,4 +1,4 @@
-import { usePlayerHudStore } from './PlayerHudStore';
+import { usePlayerHudStore } from '../../Store/PlayerHudStore';
 
 export default function PlayerHud() {
     const { isPointerLocked, isGrounded } = usePlayerHudStore();

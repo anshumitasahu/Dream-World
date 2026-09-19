@@ -1,5 +1,5 @@
 import { Physics } from "@react-three/rapier";
-import Lights from './Lights';
+import Lights from '../Rendering/Lights';
 import EcctrlWrapper from './EccrtlWrapper';
 import { useEffect, useState } from "react";
 import { EffectComposer, HueSaturation, Vignette } from "@react-three/postprocessing";

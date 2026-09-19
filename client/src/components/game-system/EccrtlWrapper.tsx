@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Ecctrl, type EcctrlHandle } from 'ecctrl';
-import { usePlayerHudStore } from './PlayerHudStore';
-import CharacterModel from '../models/CharacterModel';
+import { usePlayerHudStore } from '../../Store/PlayerHudStore';
+import CharacterModel from '../Rendering/models/CharacterModel';
 
 const MOUSE_SENSITIVITY = 0.0025;
 const MAX_LOOK_PITCH = 1.56;
