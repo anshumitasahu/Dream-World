@@ -21,6 +21,13 @@ export interface WorldObjectConfig {
     scatter?: ScatterConfig
 };
 
+export interface WorldEnvironmentConfig {
+    terrain?: 'grass' | 'soil'
+    weather?: 'clear' | 'rain' | 'snow' | 'forest' | 'desert'
+    time?: 'day' | 'night'
+    fogColor?: string
+}
+
 export interface OpenGroundConfig {
     size?: number
 };
@@ -36,7 +43,8 @@ export interface OpenWorldConfig {
     ground?: OpenGroundConfig
     playerSpawn?: [number, number, number]
     spawnZones?: SpawnZone[]
-    objects: WorldObjectConfig[]
+    objects: WorldObjectConfig[],
+    enviroment?: WorldEnvironmentConfig,
 }
 
 export type WorldConfig = PresetWorldConfig | OpenWorldConfig

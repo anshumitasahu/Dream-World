@@ -14,17 +14,10 @@ export const Route = createFileRoute('/')({
 })
 
 function LandingPage() {
-    const imgLinks = [
-        "/img/bg.jpg",
-        "https://w.wallhaven.cc/full/yx/wallhaven-yx6dyk.jpg",
-        "https://w.wallhaven.cc/full/85/wallhaven-85xjy1.jpg",
-        "https://w.wallhaven.cc/full/vp/wallhaven-vpeew#.jpg",
-    ]
-
     return (
         <div className="relative flex min-h-screen flex-col overflow-hidden bg-black text-white">
             <img
-                src={imgLinks[0]}
+                src="/img/bg.jpg"
                 alt=''
                 aria-hidden='true'
                 className="pointer-events-none fixed min-h-screen flex-col overflow-hidden bg-black text-white" />
@@ -33,20 +26,15 @@ function LandingPage() {
 
             <header className="relative z-10 flex items-center justify-between px-5 py-5 sm:px-10">
                 <Link to='/' className='flex items-center gap-2.5'>
-                    {/* <span className="flex h-8 w-8 items justify-center rounded-lg bg-white text-base text-black">
-                        +
-                    </span> */}
-                    {/* <span className="text-lg font-semibold tracking-tight">Dreamworld</span> */}
                     <LogoLong className='h-7.5' />
                 </Link>
                 <nav className="flex items-center gap-2 sm:gap-3">
                     <Link
                         to='/auth/login'
-                        className="'rounded-full border border-white/20bg-white/5 px-4 py-2 text-sm font-medium text-white backdrop-blur transition hover:border-white/40 hover:bg-white/10">
+                        className="'rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-medium text-white backdrop-blur transition hover:border-white/40 hover:bg-white/10"
+                    >
                         Log in
                     </Link>
-                </nav>
-                <nav className="flex items-center gap-2 sm:gap-3">
                     <Link
                         to='/auth/signup'
                         className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-black transition hover:bg-blue-100"
@@ -63,7 +51,7 @@ function LandingPage() {
                 <h1 className="text-5xl font-bold leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
                     Dreamworld
                 </h1>
-                <p className="mt-3 textt-blue-400 text-3xl font-semibold italic sm:text-5xl">
+                <p className="mt-3 text-blue-400 text-3xl font-semibold italic sm:text-5xl">
                     dream • live •
                 </p>
                 <p className="mt-5 max-w-xl text-valance text-sm leading-relaxed text-white/60 sm:text-base">
@@ -78,7 +66,8 @@ function LandingPage() {
                         href="https://github.com"
                         target='_blank'
                         rel='noreferrer'
-                        className="ml-auto flex items-center gap-1.5 rounded-full border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur transition hover:border-white/30 hover:text-white">
+                        className="ml-auto flex items-center gap-1.5 rounded-full border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur transition hover:border-white/30 hover:text-white"
+                    >
                         <GithubLogoIcon className="h-4 w-4" weight="fill" />
                         Github
                     </a>
