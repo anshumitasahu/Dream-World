@@ -33,7 +33,7 @@ export interface OpenGroundConfig {
 };
 
 export interface PresetWorldConfig {
-    mode?: 'present'
+    mode?: 'preset'
     map: string
     objects: WorldObjectConfig[]
 };
@@ -44,7 +44,7 @@ export interface OpenWorldConfig {
     playerSpawn?: [number, number, number]
     spawnZones?: SpawnZone[]
     objects: WorldObjectConfig[],
-    enviroment?: WorldEnvironmentConfig,
+    environment?: WorldEnvironmentConfig,
 }
 
 export type WorldConfig = PresetWorldConfig | OpenWorldConfig
