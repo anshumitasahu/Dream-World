@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Canvas, useFrame, useThree } from "@react-thrre/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three';
 import { OrbitControls, useAnimations, useGLTF } from '@react-three/drei';
 import { Physics, CuboidCollider, RigidBody } from '@react-three/rapier';
@@ -66,6 +66,28 @@ function TestSubject({
             action.fadeOut(0.25)
         }
     }, [actions, animation, path])
+
+    useEffect(() => {
+        const action = animation ? actions[animation] : undefined
+        if (!action) return
+        action.reset().fadeIn(0.25).play()
+        return () => {
+            action.fadeOut(0.25)
+        }
+    }, [actions, animation, path])
+
+    useEffect(() => {
+        const action = animation ? actions[animation] : undefined
+        if (!action) return
+        action.paused = !playing
+        if (playing && !action.isRunning()) action.play()
+    }, [actions, animation, playing])
+
+    useEffect(() => {
+        Object.values(actions).forEach((a) => {
+            if (a) a.timeScale = animSpeed
+        })
+    }, [actions, animSpeed])
 
     useEffect(() => {
         gltf.scene.traverse((o) => {
@@ -170,7 +192,7 @@ const inputCls = 'w-full rouuded bg-neutral-800 px-2 py-1 text-sm text-neutral-1
 const labelCls = 'mb-1 block text-[11px] font-semibold uppercase tracking-wide text-neutral-400'
 
 function RouteComponent() {
-    const [mode, setMode] = useState<CanMode>('orbit')
+    const [mode, setMode] = useState<CamMode>('orbit')
     const [modelPath, setModelPath] = useState(MODELS[0].path)
     const [animNames, setAnimNames] = useState<string[]>([])
     const [animation, setAnimation] = useState<string | null>(null)
@@ -204,7 +226,7 @@ function RouteComponent() {
     const setAxis = (i: 0 | 1 | 2, v: number) =>
         setPos((p) => {
             const next: [number, number, number] = [...p]
-            next[1] = Number.isFinite(v) ? v : 0
+            next[i] = Number.isFinite(v) ? v : 0
             return next
         })
 
@@ -381,7 +403,7 @@ function RouteComponent() {
                         <input
                             type="checkbox"
                             checked={showGrid}
-                            onChange={(e) => setAutoRotate(e.target.checked)}
+                            onChange={(e) => setShowGrid(e.target.checked)}
                         />
                         Show grid
                     </label>
@@ -445,13 +467,13 @@ function RouteComponent() {
                             />
                             {mode === 'fps' && <FpsRig onLockChange={setFpsLocked} />}
                         </Physics>
-                        {mode === 'orbit' && <OrbitControls makeDefault target={[pos[0], posp[1] + 1, pos[2]]} autoRotate={autoRotate} maxDistance={300} />}
+                        {mode === 'orbit' && <OrbitControls makeDefault target={[pos[0], pos[1] + 1, pos[2]]} autoRotate={autoRotate} maxDistance={300} />}
                     </Suspense>
                 </Canvas>
                 {mode === 'fps' && !fpsLocked && (
                     <div
                         onClick={() => {
-                            const canvas = canvasWrapRef.current?.querySelctor('canvas')
+                            const canvas = canvasWrapRef.current?.querySelector('canvas')
                             canvas?.requestPointerLock()
                         }}
                         className='absolute inset-0 z-10 flex cursor-pointer items-center justify-center bg-black/45 text-lg text-white select-none'
