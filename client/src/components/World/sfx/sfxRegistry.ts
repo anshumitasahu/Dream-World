@@ -1,5 +1,3 @@
-import { getRandomSfx } from "../../../routes/copy"
-
 export const SFX_REGISTRY = {
     animal: [
         '/ignore/sounds/animal/horse.mp3',
