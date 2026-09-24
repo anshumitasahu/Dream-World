@@ -1,4 +1,5 @@
 import { useGLTF } from "@react-three/drei";
+import { useKtx2LoaderExtender } from "../../../libs/ktx2";
 
 interface ModelProps {
     position?: [number, number, number];
@@ -8,7 +9,8 @@ interface ModelProps {
 };
 
 export default function Model({ position, rotation, scale, modelPath }: ModelProps) {
-    const gltf = useGLTF(modelPath, true);
+    const extendWithKtx2 = useKtx2LoaderExtender();
+    const gltf = useGLTF(modelPath, true, true, extendWithKtx2);
 
     return (
         <primitive

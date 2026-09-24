@@ -1,27 +1,26 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import * as THREE from 'three';
 import { Clone, useGLTF } from '@react-three/drei';
-import { RigidBody, useRapier } from '@react-three/rapier';
+import { RigidBody, useRapier } from '@react-three/drei';
 import { useKtx2LoaderExtender } from '../../libs/ktx2';
-import { listObjectModels, resolveObjectModel, type ObjectModelEntry } from '../../objectRegistry';
-import { resolvePhysics, type SpawnZone, type WorldObjectConfig } from './WorldTypes';
+import { listObjectModels, resolveObjectModel, resolvePhysics, type ObjectModelEntry, type WorldObjectConfig } from './WorldTypes';
 
-const MAX_PLACEMENT_ATTEMPTS = 20;
-const RAY_ORIGIN_Y = 60;
-const RAY_LENGTH = 120;
+const MAX_PLACEMENT_ATTEMPTS = 20
+const RAY_ORIGIN_Y = 60
+const RAY_LENTGH = 120
 
-const FLAT_GROUND_Y = 0;
+const FLAT_GROUND_Y = 0
 
 interface Placement {
-    position: [number, number, number]
+    position: [number, number, number],
     rotationY: number
-};
+}
 
 interface Bounds {
     half: [number, number, number]
     centerY: number
     bottomOffset: number
-};
+}
 
 interface RawBounds {
     halfXZ: number
@@ -57,14 +56,12 @@ interface PlacementInput {
 function useObjectPlacement(
     config: WorldObjectConfig,
     bounds: Bounds | null,
-    { defaultZone, spawnZones, scatterSpot, flatGround }: PlacementInput,
-): Placement | null {
+    { defaultZone, spawnZones, scatterSpot, flatGround }: PlacementInput): Placement | null {
     const { world, rapier } = useRapier()
     const [placement, setPlacement] = useState<Placement | null>(null)
 
     useEffect(() => {
         const offsetY = config.scatter?.offsetY ?? config.offsetY ?? 0
-
         if (config.position) {
             const [x, y, z] = config.position
             setPlacement({ position: [x, y + offsetY, z], rotationY: config.rotationY ?? 0 })
@@ -79,10 +76,11 @@ function useObjectPlacement(
                 })
                 return
             }
+
             const zone = spawnZones[(config.zone ?? defaultZone) % spawnZones.length]
             setPlacement({
                 position: [
-                    zone[0] + (Math.random() * 2 - 1) * zone[2],
+                    zone[0] + (Math.random() * 2 - 1) * zone(2),
                     FLAT_GROUND_Y + offsetY,
                     zone[1] + (Math.random() * 2 - 1) * zone[2],
                 ],
@@ -92,8 +90,8 @@ function useObjectPlacement(
         }
 
         if (!bounds) return
-        const probe = new rapier.Cuboid(bounds.half[0], bounds.half[1], bounds.half[2])
-        const identityRotation = { x: 0, y: 0, z: 0, w: 1 }
+        const probe = new rapier.Cuboid(bounds.half{ 0}, bounds.half[1], bounds.half[2])
+        let identityRotation = { x: 0, y: 0, z: 0, w: 1 }
         let cancelled = false
         let timeout: ReturnType<typeof setTimeout> | undefined
         let attempts = 0
@@ -120,11 +118,8 @@ function useObjectPlacement(
                     if (scatterSpot) break
                     continue
                 }
-
                 const position: [number, number, number] = [candidate.x, RAY_ORIGIN_Y - hit.timeOfImpact - bounds.bottomOffset + offsetY, candidate.z]
-
                 const probeCenter = { x: candidate.x, y: position[1] + bounds.centerY + bounds.half[1] + 0.05, z: candidate.z }
-
                 if (world.intersectionWithShape(probeCenter, identityRotation, probe)) {
                     if (scatterSpot) break
                     continue
@@ -145,7 +140,7 @@ function useObjectPlacement(
             const zone = spawnZones[(config.zone ?? defaultZone) % spawnZones.length]
             const ray = new rapier.Ray({ x: zone[0], y: RAY_ORIGIN_Y, z: zone[1] }, { x: 0, y: -1, z: 0 })
             const hit = world.castRay(ray, RAY_LENGTH, true);
-            console.log('[WorldObject] Spwan debug: ', { model: config.model, fallback: true, zone })
+            console.log('[WorldObject] Spawn debug:', { model: config.model, fallback: true, zone })
             setPlacement({
                 position: [zone[0], RAY_ORIGIN_Y - (hit?.timeOfImpact ?? RAY_ORIGIN_Y) - bounds.bottomOffset + offsetY, zone[1]],
                 rotationY: config.rotationY ?? 0,
@@ -158,7 +153,6 @@ function useObjectPlacement(
             if (timeout) clearTimeout(timeout)
         }
     }, [config, bounds, world, rapier, spawnZones, defaultZone, scatterSpot, flatGround])
-
     return placement
 }
 
@@ -168,13 +162,10 @@ function PlacedFrame({ config, placement, children }: {
     children: ReactNode
 }) {
     if (resolvePhysics(config) === 'decor') {
-        return <group position={placement.position} rotation={[0, placement.rotationY, 0]}>
-            {children}
-        </group>
+        return <group position={placement.position} rotation={[0, placement.rotationY, 0]}>{children}</group>
     }
     return (
-        <RigidBody type='fixed' colliders="cuboid" position={placement.position}
-            rotation={[0, placement.rotationY, 0]}>
+        <RigidBody type="fixed" colliders="cuboid" position={placement.position} rotation={[0, placement.rotationY, 0]}>
             {children}
         </RigidBody>
     )
@@ -187,8 +178,7 @@ function footprintBounds(footprint: [number, number, number]): Bounds {
     return { half: footprint, centerY: 0, bottomOffset: 0 }
 }
 
-function componentBounds(config: WorldObjectConfig, entry: ComponentEntry):
-    Bounds {
+function componentBounds(config: WorldObjectConfig, entry: ComponentEntry): Bounds {
     return footprintBounds(config.footprint ?? entry.footprint ?? [1, 1, 1])
 }
 
@@ -229,13 +219,14 @@ function ComponentWorldObject({ config, entry, ...input }: PlacementInput & {
     const scale = config.scale ?? entry.defaultScale ?? 1
     const bounds = useMemo<Bounds | null>(
         () => (input.flatGround ? null : componentBounds(config, entry)),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [config.footprint, config.scale, entry, input.flatGround],
     )
-
     const placement = useObjectPlacement(config, bounds, input)
     if (!placement) return null
 
     const Component = entry.component
+    config.physics = 'decor';
     return (
         <PlacedFrame config={config} placement={placement}>
             <Component scale={scale} />
@@ -248,11 +239,11 @@ export function WorldObject({ config, ...input }: PlacementInput & {
 }) {
     const entry = resolveObjectModel(config.model)
     if (!entry) {
-        console.warn(`[WorldObject] Unkown model "${config.model}". Known models: ${listObjectModels().join(', ')}`)
+        console.warn(`[WorldObject] Unknown model "${config.model}". Known models: ${listObjectModels().join(', ')}`)
         return null
     }
     if (entry.kind === 'component') {
         return <ComponentWorldObject config={config} entry={entry} {...input} />
     }
     return <PathWorldObject config={config} entry={entry} {...input} />
-};
+}
