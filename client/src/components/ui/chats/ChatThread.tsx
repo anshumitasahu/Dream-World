@@ -82,15 +82,15 @@ return (
 									</p>
 								</div>
 							) : (
-							<div className='flex items-center gap-2 rounded-2xl rounded-tl-md border border-white/10 bg-white/[0.04] px-4 py-3 text-[13px] text-white/50'>
-								<WarningCircleIcon className='h-4 w-4 text-amber-300/80' />
-								No world data in this response
-							</div>
-		    	      	        	          	        	    	      	                        	          	            	              	                	                                                                      	              	                            	                	                  	                                                              	                                                                                                                        	                  	                                                                          )}
+								<div className='flex items-center gap-2 rounded-2xl rounded-tl-md border border-white/10 bg-white/[0.04] px-4 py-3 text-[13px] text-white/50'>
+									<WarningCircleIcon className='h-4 w-4 text-amber-300/80' />
+									No world data in this response
+								</div>
+							)}
 						</div>
 					</div>
 				</div>
-		    	      	        	          	        	    	      	                        	          	            	              	                	                                                                      	              	                            	                	                  	                                                              	                                                                                                                                                                    )
+			)
 		})}
 
 		{isPending && (
