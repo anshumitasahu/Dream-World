@@ -1,32 +1,14 @@
 {
-    "map": "testMap",
-    "objects": [
-        {
-            "model": "models/tree.glb",
-            "zone": 0,
-            "scale": 10
-        },
-        {
-            "model": "models/spyro_the_dragon.glb",
-            "zone": 3,
-            "rotationY": 100
-        },
-        {
-            "model": "models/forest_house.glb",
-            "zone": 1,
-            "scale": 200,
-            "rotationY": 1.2
-        },
-        {
-            "model": "models/phoenix_bird.glb",
-            "zone": 2,
-            "scale": 0.05
-        },
-        {
-            "model": "models/forest_house.glb",
-            "zone": 3,
-            "rotationY": 100,
-            "scale": 100
-        }
-    ]
+  "map": "strongHold",
+  "objects": [
+    {
+      "model": "/models/cyberpunk_hovercar.glb",
+      "zone": 0
+    },
+    {
+      "model": "/models/cyberpunk_hovercar.glb",
+      "zone": 3,
+      "rotationY": 1.2
+    }
+  ]
 }

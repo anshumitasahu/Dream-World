@@ -1,13 +1,16 @@
 import { useLoader, type ThreeElements } from '@react-three/fiber'
 import { CuboidCollider, RigidBody } from '@react-three/rapier'
+import { useMemo } from 'react'
 import { TextureLoader, RepeatWrapping, SRGBColorSpace } from 'three'
+import { textureRegistry, type TextureKind } from '../../World/texture/textureRegistry'
 
-export const GROUND_TEXTURES = [
-    '/texture/ground/optimized/road_damaged_diff.png',
-    '/texture/ground/optimized/road_damaged_nor_gl.png',
-    '/texture/ground/optimized/road_damaged_rough.png',
-    '/texture/ground/optimized/road_damaged_ao.png',
-]
+const GROUND_TEXTURE_FILES = ['diff.png', 'nor_gl.png', 'rough.png', 'ao.png']
+
+/** [diffuse, normal, roughness, ao] texture paths for a ground texture, resolved from textureRegistry */
+export function groundTexturePaths(texture: TextureKind = 'default'): string[] {
+    const { url } = textureRegistry[texture]
+    return GROUND_TEXTURE_FILES.map((file) => `${url}/${file}`)
+}
 
 const DEFAULT_SIZE = 2000
 const WALL_HEIGHT = 4
@@ -21,22 +24,23 @@ export const OpenPlainsSpawnZones: Array<[number, number, number]> = [
     [-600, 500, 20],
 ]
 
-export function OpenPlains({ size = DEFAULT_SIZE, ...props }: ThreeElements['group'] & { size?: number }) {
+export function OpenPlains({ size = DEFAULT_SIZE, texture = 'default', ...props }: ThreeElements['group'] & { size?: number; texture?: TextureKind }) {
     const half = size / 2
-    const [diffuse, normal, roughness, ao] = useLoader(TextureLoader, GROUND_TEXTURES)
+    const texturePaths = useMemo(() => groundTexturePaths(texture), [texture])
+    const [diffuse, normal, roughness, ao] = useLoader(TextureLoader, texturePaths)
 
     diffuse.colorSpace = SRGBColorSpace;
     const textureRepeat = size / 10;
-    [diffuse, normal, roughness, ao].forEach((texture) => {
-        texture.wrapS = RepeatWrapping
-        texture.wrapT = RepeatWrapping
-        texture.repeat.set(textureRepeat, textureRepeat)
-        texture.anisotropy = 4
+    [diffuse, normal, roughness, ao].forEach((map) => {
+        map.wrapS = RepeatWrapping
+        map.wrapT = RepeatWrapping
+        map.repeat.set(textureRepeat, textureRepeat)
+        map.anisotropy = 4
     })
 
     return (
         <group {...props} dispose={null}>
-            <RigidBody type="fixed" colliders={false} position={[0, -1, 0]}>
+            <RigidBody type="fixed" colliders={false} position={[0, 0, 0]}>
                 <CuboidCollider args={[half, 1, half]} />
                 <mesh receiveShadow rotation-x={-Math.PI / 2}>
                     <planeGeometry args={[size, size]} />
