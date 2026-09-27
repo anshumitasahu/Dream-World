@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { requireAuth } from "../../lib/auth/authMiddleWare";
-import { validateBody } from "../../lib/inputValidation";
-import { googleAuthSchema, loginSchema, signupSchema } from "../../sharedTypes/auth/auth.model";
+import { requireAuth } from "@/lib/auth/authMiddleware";
+import { validateBody } from "@/lib/inputValidation";
+import { googleAuthSchema, loginSchema, signupSchema } from "@/sharedTypes/auth/auth.model";
 import { googleAuthController, loginController, meController, signupController } from "./auth.controller";
 
 const router = Router();

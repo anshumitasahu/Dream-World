@@ -20,33 +20,71 @@ model User {
   googleId  String? @unique
   avatarUrl String?
 
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  userLikes UserLikes[]
+  userChats UserChat[]
+  dreams    Dream[]
+}
+
+model UserChat {
+  id     String @id @default(cuid())
+  title  String
+  userId String
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  userChatHistories UserChatHistory[]
+  dream             Dream?
+}
+
+model UserChatHistory {
+  id         String @id @default(cuid())
+  userChatId String
+  message    String
+  response   Json
+
+  userChat UserChat @relation(fields: [userChatId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  userDreams UserDream[]
-  userLikes  UserLikes[]
 }
 
 model Dream {
-  id     String @id @default(cuid())
-  title  String
-  prompt String
-  likes  Int    @default(0)
+  id          String @id @default(cuid())
+  userChatId  String @unique
+  title       String
+  prompt      String
+  likes       Int    @default(0)
+  authorId    String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  userChat UserChat @relation(fields: [userChatId], references: [id])
+  author   User     @relation(fields: [authorId], references: [id])
 
-  userDreams UserDream[]
-  userLikes  UserLikes[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  userLikes UserLikes[]
+  dreamTags DreamTags[]
 }
 
-model UserDream {
-  id      String @id @default(cuid())
-  userId  String
-  dreamId String
+model Tags {
+  id   String @id @default(cuid())
+  name String @unique
 
-  user User  @relation(fields: [userId], references: [id])
-  post Dream @relation(fields: [dreamId], references: [id])
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  dreamTags DreamTags[]
+}
+
+model DreamTags {
+  id      String @id @default(cuid())
+  dreamId String
+  tagId   String
+
+  dream Dream @relation(fields: [dreamId], references: [id])
+  tag   Tags  @relation(fields: [tagId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -57,8 +95,8 @@ model UserLikes {
   userId  String
   dreamId String
 
-  user User  @relation(fields: [userId], references: [id])
-  post Dream @relation(fields: [dreamId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+  dream Dream @relation(fields: [dreamId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
