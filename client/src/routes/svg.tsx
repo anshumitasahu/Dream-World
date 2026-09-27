@@ -12,10 +12,10 @@ export const Route = createFileRoute('/svg')({
 
 function RouteComponent() {
   return (
-    <div className="flex flex-col items-center justify-center gap-4 bg-white w-screen h-screen">
+    <div className="flex flex-col items-center justify-center gap-4 bg-black w-screen h-screen">
       {/* dialogue box with avatar frame */}
       <div className="flex gap-8">
-        <MagicWand className="w-16 h-16" />
+        <MagicWand className="w-100" />
       </div>
     </div>
   )

@@ -1,6 +1,5 @@
-import { Link } from '@tanstack/react-router'
 import type { ChatHistoryEntry } from '../../../api/chat'
-import { PlusIcon, SidebarSimpleIcon, WarningCircleIcon } from '@phosphor-icons/react'
+import { SidebarSimpleIcon, WarningCircleIcon } from '@phosphor-icons/react'
 import { ChatComposer } from './ChatComposer'
 import { ChatThread } from './ChatThread'
 
