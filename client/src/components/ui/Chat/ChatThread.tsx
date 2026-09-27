@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef, useState } from 'react'
 import type { ChatHistoryEntry } from '../../../api/chat'
-import { describeObject, objectCount, objectModelNames, parseAgentTurn } from './worldUtils'
+import { objectCount, parseAgentTurn } from './worldUtils'
 import Logo from '../../../assets/Logo'
 import { CoinsIcon, SparkleIcon, TerminalIcon, WarningCircleIcon } from '@phosphor-icons/react'
 import { ThinkingOrb } from 'thinking-orbs'

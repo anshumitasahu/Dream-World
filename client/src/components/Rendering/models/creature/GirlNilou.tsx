@@ -8,7 +8,7 @@ Title: Nilou 1 Genshin Impact
 */
 
 import * as THREE from 'three'
-import React, { useMemo, type JSX } from 'react'
+import { useMemo, type JSX } from 'react'
 import { useGraph } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
 import { type GLTF, SkeletonUtils } from 'three-stdlib'

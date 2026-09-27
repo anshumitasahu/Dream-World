@@ -40,6 +40,7 @@ export function Pigeon(props: JSX.IntrinsicElements['group']) {
   const { scene, animations } = useGLTF(MODEL_URL, true, true, extendWithKtx2)
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes, materials } = useGraph(clone) as unknown as GLTFResult
+  // @ts-ignore
   const { actions } = useAnimations(animations, group)
   return (
     <group ref={group} {...props} dispose={null}>
