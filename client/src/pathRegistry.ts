@@ -1,4 +1,4 @@
-const BASE_URL = "http://r2.geckostack.store"
+const BASE_URL = import.meta.env.VITE_CDN_URL || 'https://r2.geckostack.store'
 const MODEL_PATH = `${BASE_URL}/models`
 
 const assetUrl = {

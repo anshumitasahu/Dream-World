@@ -1,21 +1,24 @@
+const BASE_URL = import.meta.env.VITE_CDN_URL || 'https://r2.geckostack.store'
+const TEXTURE_PATH = `${BASE_URL}/texture`
+
 export const textureRegistry = {
   default: {
-    url: '/texture/ground/soil',
+    url: `${TEXTURE_PATH}/ground/soil`,
   },
   grass: {
-    url: '/texture/ground/grass',
+    url: `${TEXTURE_PATH}/ground/grass`,
   },
   soil: {
-    url: '/texture/ground/soil',
+    url: `${TEXTURE_PATH}/ground/soil`,
   },
   snow: {
-    url: '/texture/ground/snow',
+    url: `${TEXTURE_PATH}/ground/snow`,
   },
   sand: {
-    url: '/texture/ground/sand',
+    url: `${TEXTURE_PATH}/ground/sand`,
   },
   mud: {
-    url: '/texture/ground/mud',
+    url: `${TEXTURE_PATH}/ground/mud`,
   }
 }
 

@@ -17,9 +17,6 @@ export type ObjectModelEntry =
   | { kind: 'path'; path: string; defaultScale?: number; footprint?: [number, number, number] }
   | { kind: 'component'; component: ObjectModelComponent; defaultScale?: number; footprint?: [number, number, number] }
 
-const BASE_URL = "http://r2.geckostack.store"
-const MODEL_PATH = `${BASE_URL}/models`
-
 /**
  * Client-owned model registry.
  * The backend sends only a model NAME (e.g. "house"); this registry decides

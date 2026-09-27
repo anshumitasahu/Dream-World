@@ -1,5 +1,6 @@
 import api from "../lib/api";
 import type { WorldConfig } from "../components/World/worldTypes";
+import type { messageUsage } from "../sharedTypes/chat/chat.model";
 
 export interface apiEnvelope<T> {
   success: boolean;
@@ -11,6 +12,7 @@ export interface apiEnvelope<T> {
 export interface AgentWorldResponse {
   message: string;
   world: WorldConfig;
+  usage?: messageUsage;
 }
 
 export interface ChatHistoryEntry {

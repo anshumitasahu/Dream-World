@@ -4,6 +4,7 @@ import type { TokenPayload } from "google-auth-library";
 import { signAuthToken } from "@/lib/auth/jwt";
 import { ApiError } from "@/lib/errors";
 import { prisma } from "@/lib/prisma";
+import { grantSignupCredits } from "@/modules/credit/credit.service";
 import type {
   authResponse,
   authUser,
@@ -53,6 +54,8 @@ export async function signupUser(body: signupParams): Promise<authResponse> {
       password: hashedPassword,
     },
   });
+
+  await grantSignupCredits(user.id);
 
   return createAuthResponse(user);
 }
@@ -121,6 +124,8 @@ export async function googleAuthUser(body: googleAuthParams): Promise<authRespon
       });
     }
   }
+
+  await grantSignupCredits(user.id);
 
   return createAuthResponse(user);
 }

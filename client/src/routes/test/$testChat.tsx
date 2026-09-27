@@ -74,7 +74,7 @@ function DebugExperience({
   camMode: CamMode
 }) {
   const mapId = config.mode === 'open' ? 'openPlains' : config.map
-  const environment = config.mode === 'open' ? config.environment : undefined
+  const environment = config.environment
 
   useTexture.preload(groundTexturePaths(config.mode === 'open' ? config.ground?.texture : undefined))
   const weather = environment?.weather ?? 'clear'

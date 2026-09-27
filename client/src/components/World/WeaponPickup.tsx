@@ -9,9 +9,8 @@ import { Model as M4A1Gun } from '../Rendering/models/weapon/M4A1Gun'
 const PICKUP_RADIUS = 2.5
 /** Resting height of the floating weapon above its placement point */
 const HOVER_HEIGHT = 0.6
-const BOB_HEIGHT = 0.08
-const BOB_SPEED = 2
-const SPIN_SPEED = 1.2
+const BOB_HEIGHT = 0.15
+const BOB_SPEED = 1.6
 
 /**
  * World weapon pickup. Renders the M4A1 floating at its placement point; once
@@ -37,7 +36,6 @@ export function WeaponPickup(props: ThreeElements['group']) {
 
     const elapsed = state.clock.getElapsedTime()
     weapon.position.y = HOVER_HEIGHT + Math.sin(elapsed * BOB_SPEED) * BOB_HEIGHT
-    weapon.rotation.y = elapsed * SPIN_SPEED
 
     const player = usePlayerStore.getState().position
     const dx = player.x - worldPosition.current.x

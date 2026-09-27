@@ -73,6 +73,7 @@ export interface PresetWorldConfig {
   mode?: 'preset'
   map: string
   objects: WorldObjectConfig[],
+  environment?: WorldEnvironmentConfig,
   /** Player-triggered objectives; zones are monitored every frame */
   missions?: MissionConfig[],
 }

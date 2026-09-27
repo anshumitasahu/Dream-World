@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { createChatApi, getChatApi, listChatsApi, sendMessageApi } from "../api/chat";
 import { getApiErrorMessage } from "../lib/api";
+import { CREDIT_QUERY_KEY } from "./useCredits";
 
 export const CHAT_QUERY_KEY = ["chats"] as const;
 
@@ -12,6 +13,7 @@ export function useCreateChat() {
     mutationFn: (message: string) => createChatApi(message),
     onSuccess: (response) => {
       void queryClient.invalidateQueries({ queryKey: [...CHAT_QUERY_KEY, "list"] });
+      void queryClient.invalidateQueries({ queryKey: CREDIT_QUERY_KEY });
       void navigate({ to: "/chat/$chatid", params: { chatid: response.data.id } });
     },
   });
@@ -47,6 +49,7 @@ export function useSendMessage(chatId: string) {
     mutationFn: (message: string) => sendMessageApi(chatId, message),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: [...CHAT_QUERY_KEY, chatId] });
+      void queryClient.invalidateQueries({ queryKey: CREDIT_QUERY_KEY });
     },
   });
 }

@@ -2,7 +2,7 @@ import { memo, useEffect, useRef, useState } from 'react'
 import type { ChatHistoryEntry } from '../../../api/chat'
 import { describeObject, objectCount, objectModelNames, parseAgentTurn } from './worldUtils'
 import Logo from '../../../assets/Logo'
-import { SparkleIcon, TerminalIcon, WarningCircleIcon } from '@phosphor-icons/react'
+import { CoinsIcon, SparkleIcon, TerminalIcon, WarningCircleIcon } from '@phosphor-icons/react'
 import { ThinkingOrb } from 'thinking-orbs'
 
 interface ChatThreadProps {
@@ -14,6 +14,13 @@ function formatTime(iso: string): string {
   const d = new Date(iso)
   if (Number.isNaN(d.getTime())) return ''
   return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })
+}
+
+function formatTokens(tokens: number): string {
+  if (tokens < 1000) return String(tokens)
+  const k = tokens / 1000
+  const rounded = Math.round(k * 10) / 10
+  return `${Number.isInteger(rounded) ? rounded : rounded.toFixed(1)}k`
 }
 
 export const ChatThread = memo(function ChatThread({ histories, isPending }: ChatThreadProps) {
@@ -60,7 +67,6 @@ export const ChatThread = memo(function ChatThread({ histories, isPending }: Cha
       {histories.map((h) => {
         const turn = parseAgentTurn(h.response)
         const count = objectCount(turn.world)
-        const names = objectModelNames(turn.world)
         return (
           <div key={h.id} className='space-y-4'>
             <div className='flex justify-end'>
@@ -94,23 +100,15 @@ export const ChatThread = memo(function ChatThread({ histories, isPending }: Cha
                       {count} {count === 1 ? 'object' : 'objects'} placed
                       {h.updatedAt && <span className='text-white/30'>· {formatTime(h.updatedAt)}</span>}
                     </p>
-                    {names.length > 0 && (
-                      <div className='mt-2.5 flex flex-wrap gap-1.5'>
-                        {names.slice(0, 6).map((name) => (
-                          <span
-                            key={name}
-                            title={describeObject(name) ?? name}
-                            className='rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-0.5 text-[11px] text-white/60'
-                          >
-                            {name}
-                          </span>
-                        ))}
-                        {names.length > 6 && (
-                          <span className='rounded-full px-2 py-0.5 text-[11px] text-white/35'>
-                            +{names.length - 6} more
-                          </span>
-                        )}
-                      </div>
+                    {turn.usage && (
+                      <p className='mt-1.5 flex items-center gap-1.5 text-[12px] text-white/45'>
+                        <CoinsIcon className='h-3 w-3 text-blue-300' weight='fill' />
+                        <span className='tabular-nums'>{formatTokens(turn.usage.totalTokens)} </span>
+                        <span className='text-white/25'>·</span>
+                        <span className='tabular-nums'>{turn.usage.creditsUsed} dream coin used</span>
+                        <span className='text-white/25'>·</span>
+                        <span className='tabular-nums'>{turn.usage.creditsLeft} left</span>
+                      </p>
                     )}
                   </div>
                 ) : (

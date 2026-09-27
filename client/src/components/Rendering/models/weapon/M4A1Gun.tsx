@@ -8,7 +8,7 @@ Title: Low Poly Colt M4A1
 */
 
 import * as THREE from 'three'
-import { type JSX } from 'react'
+import { useMemo, type JSX } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { type GLTF } from 'three-stdlib'
 import { useKtx2LoaderExtender } from '../../../../lib/ktx2'
@@ -32,18 +32,99 @@ type GLTFResult = GLTF & {
 
 const MODEL_URL = getAssetUrl('m4a1');
 
+const MODEL_SCALE = 2
+const INDICATOR_RADIUS = 1.5
+const INDICATOR_HEIGHT = 4
+const INDICATOR_RADIAL_SEGMENTS = 48
+const INDICATOR_HEIGHT_SEGMENTS = 16
+const INDICATOR_COLOR = '#22c55e'
+/** Outer halo shell that wraps the beam to fake a bloom-free glow. */
+const INDICATOR_GLOW_SCALE = 1.15
+const INDICATOR_GLOW_OPACITY = 0.4
+
+/**
+ * Open-ended cylinder shell whose vertex colours fade from opaque at the base to
+ * fully transparent at the top, so the pickup reads as a solid beam of light on
+ * the ground that dissolves upward. RGBA vertex colours need height segments to
+ * interpolate across, hence the extra ring of vertices.
+ */
+function useIndicatorGeometry(): THREE.CylinderGeometry {
+  return useMemo(() => {
+    const geometry = new THREE.CylinderGeometry(
+      INDICATOR_RADIUS,
+      INDICATOR_RADIUS,
+      INDICATOR_HEIGHT,
+      INDICATOR_RADIAL_SEGMENTS,
+      INDICATOR_HEIGHT_SEGMENTS,
+      true,
+    )
+    const color = new THREE.Color(INDICATOR_COLOR)
+    const position = geometry.getAttribute('position')
+    const colors = new Float32Array(position.count * 4)
+    for (let i = 0; i < position.count; i++) {
+      const t = THREE.MathUtils.clamp(position.getY(i) / INDICATOR_HEIGHT + 0.5, 0, 1)
+      colors[i * 4] = color.r
+      colors[i * 4 + 1] = color.g
+      colors[i * 4 + 2] = color.b
+      colors[i * 4 + 3] = 1 - t
+    }
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 4))
+    return geometry
+  }, [])
+}
+
 export function Model(props: JSX.IntrinsicElements['group']) {
   const extendWithKtx2 = useKtx2LoaderExtender()
   const { nodes, materials } = useGLTF(MODEL_URL, true, true, extendWithKtx2) as unknown as GLTFResult
+  const indicatorGeometry = useIndicatorGeometry()
+
   return (
     <group {...props} dispose={null}>
-      <group rotation={[-Math.PI / 2, 0, 0]}>
-        <lineSegments geometry={nodes.Object_5.geometry} material={materials.Grey_Metal} />
-        <mesh geometry={nodes.Object_2.geometry} material={materials.Grey_Plastic} />
-        <mesh geometry={nodes.Object_3.geometry} material={materials.Black_Metal} />
-        <mesh geometry={nodes.Object_4.geometry} material={materials.Black_Plastic} />
-        <mesh geometry={nodes.Object_6.geometry} material={materials.Grey_Metal} />
+      <group scale={MODEL_SCALE} position-x={1} position-y={2}>
+        <group rotation={[-Math.PI / 2, 0, 0]}>
+          <lineSegments geometry={nodes.Object_5.geometry} material={materials.Grey_Metal} />
+          <mesh geometry={nodes.Object_2.geometry} material={materials.Grey_Plastic} />
+          <mesh geometry={nodes.Object_3.geometry} material={materials.Black_Metal} />
+          <mesh geometry={nodes.Object_4.geometry} material={materials.Black_Plastic} />
+          <mesh geometry={nodes.Object_6.geometry} material={materials.Grey_Metal} />
+        </group>
       </group>
+
+      {/* gradient indicator for the gun — additive so it self-illuminates and
+          stays readable at night, with a wider halo shell faking a soft glow */}
+      <mesh geometry={indicatorGeometry}>
+        <meshBasicMaterial
+          vertexColors
+          transparent
+          opacity={1}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+          toneMapped={false}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+      <mesh geometry={indicatorGeometry} scale={INDICATOR_GLOW_SCALE}>
+        <meshBasicMaterial
+          vertexColors
+          transparent
+          opacity={INDICATOR_GLOW_OPACITY}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+          toneMapped={false}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+      <mesh rotation-x={-Math.PI / 2} position-y={-INDICATOR_HEIGHT / 2}>
+        <ringGeometry args={[INDICATOR_RADIUS * 0.82, INDICATOR_RADIUS * 1.05, 64]} />
+        <meshBasicMaterial
+          color={INDICATOR_COLOR}
+          transparent
+          opacity={0.95}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </mesh>
     </group>
   )
 }

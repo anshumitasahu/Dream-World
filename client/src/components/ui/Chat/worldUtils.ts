@@ -2,14 +2,21 @@ import type { ChatHistoryEntry } from '../../../api/chat'
 import type { WorldConfig } from '../../World/worldTypes'
 import { worldSchema } from '../../../sharedTypes/world/world.model'
 import { worldObjectKnowledge } from '../../../sharedTypes/world/worldKnowledge'
+import { messageUsageSchema, type messageUsage } from '../../../sharedTypes/chat/chat.model'
 
 export interface AgentTurn {
   message: string | null
   world: WorldConfig | null
+  usage: messageUsage | null
 }
 
 function toWorld(value: unknown): WorldConfig | null {
   const parsed = worldSchema.safeParse(value)
+  return parsed.success ? parsed.data : null
+}
+
+function toUsage(value: unknown): messageUsage | null {
+  const parsed = messageUsageSchema.safeParse(value)
   return parsed.success ? parsed.data : null
 }
 
@@ -18,26 +25,27 @@ function toWorld(value: unknown): WorldConfig | null {
  * `{ message, world }` envelope, a bare world config, and legacy JSON strings.
  */
 export function parseAgentTurn(response: ChatHistoryEntry['response'] | null | undefined): AgentTurn {
-  if (!response) return { message: null, world: null }
+  if (!response) return { message: null, world: null, usage: null }
 
   let value: unknown = response
   if (typeof response === 'string') {
     try {
       value = JSON.parse(response)
     } catch {
-      return { message: null, world: null }
+      return { message: null, world: null, usage: null }
     }
   }
 
   if (value && typeof value === 'object' && 'world' in value) {
-    const turn = value as { message?: unknown; world?: unknown }
+    const turn = value as { message?: unknown; world?: unknown; usage?: unknown }
     return {
       message: typeof turn.message === 'string' ? turn.message : null,
       world: toWorld(turn.world),
+      usage: toUsage(turn.usage),
     }
   }
 
-  return { message: null, world: toWorld(value) }
+  return { message: null, world: toWorld(value), usage: null }
 }
 
 export function parseWorld(response: ChatHistoryEntry['response'] | null | undefined): WorldConfig | null {

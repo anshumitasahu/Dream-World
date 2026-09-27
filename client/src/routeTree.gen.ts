@@ -16,6 +16,7 @@ import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as ChatChatidRouteImport } from './routes/chat/$chatid'
 import { Route as ChatNewRouteImport } from './routes/chat/new'
 import { Route as ExploreIndexRouteImport } from './routes/explore/index'
+import { Route as ExploreDreamIdRouteImport } from './routes/explore/$dreamId'
 import { Route as TestIndexRouteImport } from './routes/test/index'
 import { Route as TestTestChatRouteImport } from './routes/test/$testChat'
 
@@ -54,6 +55,11 @@ const ExploreIndexRoute = ExploreIndexRouteImport.update({
   path: '/explore/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExploreDreamIdRoute = ExploreDreamIdRouteImport.update({
+  id: '/explore/$dreamId',
+  path: '/explore/$dreamId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TestIndexRoute = TestIndexRouteImport.update({
   id: '/test/',
   path: '/test/',
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/auth/signup': typeof AuthSignupRoute
   '/chat/$chatid': typeof ChatChatidRoute
   '/chat/new': typeof ChatNewRoute
+  '/explore/$dreamId': typeof ExploreDreamIdRoute
   '/test/$testChat': typeof TestTestChatRoute
   '/explore/': typeof ExploreIndexRoute
   '/test/': typeof TestIndexRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/auth/signup': typeof AuthSignupRoute
   '/chat/$chatid': typeof ChatChatidRoute
   '/chat/new': typeof ChatNewRoute
+  '/explore/$dreamId': typeof ExploreDreamIdRoute
   '/test/$testChat': typeof TestTestChatRoute
   '/explore': typeof ExploreIndexRoute
   '/test': typeof TestIndexRoute
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/auth/signup': typeof AuthSignupRoute
   '/chat/$chatid': typeof ChatChatidRoute
   '/chat/new': typeof ChatNewRoute
+  '/explore/$dreamId': typeof ExploreDreamIdRoute
   '/test/$testChat': typeof TestTestChatRoute
   '/explore/': typeof ExploreIndexRoute
   '/test/': typeof TestIndexRoute
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/chat/$chatid'
     | '/chat/new'
+    | '/explore/$dreamId'
     | '/test/$testChat'
     | '/explore/'
     | '/test/'
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/chat/$chatid'
     | '/chat/new'
+    | '/explore/$dreamId'
     | '/test/$testChat'
     | '/explore'
     | '/test'
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/chat/$chatid'
     | '/chat/new'
+    | '/explore/$dreamId'
     | '/test/$testChat'
     | '/explore/'
     | '/test/'
@@ -142,6 +154,7 @@ export interface RootRouteChildren {
   AuthSignupRoute: typeof AuthSignupRoute
   ChatChatidRoute: typeof ChatChatidRoute
   ChatNewRoute: typeof ChatNewRoute
+  ExploreDreamIdRoute: typeof ExploreDreamIdRoute
   TestTestChatRoute: typeof TestTestChatRoute
   ExploreIndexRoute: typeof ExploreIndexRoute
   TestIndexRoute: typeof TestIndexRoute
@@ -198,6 +211,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExploreIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/explore/$dreamId': {
+      id: '/explore/$dreamId'
+      path: '/explore/$dreamId'
+      fullPath: '/explore/$dreamId'
+      preLoaderRoute: typeof ExploreDreamIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/test/': {
       id: '/test/'
       path: '/test'
@@ -222,6 +242,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthSignupRoute: AuthSignupRoute,
   ChatChatidRoute: ChatChatidRoute,
   ChatNewRoute: ChatNewRoute,
+  ExploreDreamIdRoute: ExploreDreamIdRoute,
   TestTestChatRoute: TestTestChatRoute,
   ExploreIndexRoute: ExploreIndexRoute,
   TestIndexRoute: TestIndexRoute,

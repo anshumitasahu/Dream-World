@@ -18,7 +18,16 @@ export const worldAgentResponseSchema = z.object({
   world: worldSchema,
 });
 
+export const messageUsageSchema = z.object({
+  inputTokens: z.number().int().nonnegative(),
+  outputTokens: z.number().int().nonnegative(),
+  totalTokens: z.number().int().nonnegative(),
+  creditsUsed: z.number().int().nonnegative(),
+  creditsLeft: z.number().int().nonnegative(),
+});
+
 export type createChatParams = z.infer<typeof createChatSchema>;
 export type sendMessageParams = z.infer<typeof sendMessageSchema>;
 export type chatIdParams = z.infer<typeof chatIdParamSchema>;
 export type worldAgentResponse = z.infer<typeof worldAgentResponseSchema>;
+export type messageUsage = z.infer<typeof messageUsageSchema>;

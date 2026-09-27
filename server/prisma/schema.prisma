@@ -20,11 +20,13 @@ model User {
   googleId  String? @unique
   avatarUrl String?
 
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  userLikes UserLikes[]
-  userChats UserChat[]
-  dreams    Dream[]
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  userLikes           UserLikes[]
+  userChats           UserChat[]
+  dreams              Dream[]
+  userCredits         UserCredits[]
+  userCreditHistories UserCreditHistory[]
 }
 
 model UserChat {
@@ -53,12 +55,12 @@ model UserChatHistory {
 }
 
 model Dream {
-  id          String @id @default(cuid())
-  userChatId  String @unique
-  title       String
-  prompt      String
-  likes       Int    @default(0)
-  authorId    String
+  id         String @id @default(cuid())
+  userChatId String @unique
+  title      String
+  prompt     String
+  likes      Int    @default(0)
+  authorId   String
 
   userChat UserChat @relation(fields: [userChatId], references: [id])
   author   User     @relation(fields: [authorId], references: [id])
@@ -97,6 +99,29 @@ model UserLikes {
 
   user  User  @relation(fields: [userId], references: [id])
   dream Dream @relation(fields: [dreamId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserCredits {
+  id      String @id @default(cuid())
+  userId  String
+  credits Int    @default(0)
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserCreditHistory {
+  id     String @id @default(cuid())
+  userId String
+  change Int
+  reason String
+
+  user User @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

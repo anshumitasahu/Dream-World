@@ -16,6 +16,21 @@ export interface agentTurn {
   content: string;
 }
 
+export interface agentTurnUsage {
+  inputTokens: number;
+  outputTokens: number;
+}
+
+export interface agentTurnResult {
+  response: worldAgentResponse;
+  usage: agentTurnUsage;
+}
+
+/** Rough token estimate (~4 characters per token) for when the API omits usage. */
+function estimateTokens(text: string): number {
+  return Math.max(1, Math.ceil(text.length / 4));
+}
+
 function toMessage(turn: agentTurn): ChatMessages {
   return turn.role === 'user'
     ? { role: 'user', content: turn.content }
@@ -59,13 +74,14 @@ function extractJson(text: string): unknown {
  * Runs one agentic turn: feeds the world-builder system prompt plus the full
  * conversation history to the model and returns its validated reply.
  */
-export async function generateWorldTurn(history: agentTurn[], message: string): Promise<worldAgentResponse> {
+export async function generateWorldTurn(history: agentTurn[], message: string): Promise<agentTurnResult> {
+  const systemPrompt = buildWorldSystemPrompt();
   const completion = await openRouter.chat.send({
     chatRequest: {
       model,
       responseFormat: { type: 'json_object' },
       messages: [
-        { role: 'system', content: buildWorldSystemPrompt() },
+        { role: 'system', content: systemPrompt },
         ...history.map(toMessage),
         { role: 'user', content: message },
       ],
@@ -83,5 +99,10 @@ export async function generateWorldTurn(history: agentTurn[], message: string): 
     throw new ApiError(502, "I couldn't dream that up — the world came back unreadable. Please try again.");
   }
 
-  return parsed.data;
+  const usage = completion.usage;
+  const inputTokens =
+    usage?.promptTokens ?? estimateTokens([systemPrompt, ...history.map((turn) => turn.content), message].join('\n'));
+  const outputTokens = usage?.completionTokens ?? estimateTokens(raw);
+
+  return { response: parsed.data, usage: { inputTokens, outputTokens } };
 }

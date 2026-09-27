@@ -1,58 +1,61 @@
 import type { TextureKind } from '../texture/textureRegistry'
 
+const BASE_URL = import.meta.env.VITE_CDN_URL || 'https://r2.geckostack.store'
+const SFX_PATH = `${BASE_URL}/sounds`
+
 export const SFX_REGISTRY = {
   animal: [
-    '/ignore/sounds/animal/horse.mp3',
+    `${SFX_PATH}/animal/horse.mp3`,
   ],
   deepSea: [
-    '/ignore/sounds/deepSea/creepy-whale.mp3',
-    '/ignore/sounds/deepSea/distant-growl.mp3',
-    '/ignore/sounds/deepSea/growl.mp3',
-    '/ignore/sounds/deepSea/haunting-whale.mp3',
-    '/ignore/sounds/deepSea/long-howl.mp3',
-    '/ignore/sounds/deepSea/underwater.mp3',
-    '/ignore/sounds/deepSea/whale.mp3',
+    `${SFX_PATH}/deepSea/creepy-whale.mp3`,
+    `${SFX_PATH}/deepSea/distant-growl.mp3`,
+    `${SFX_PATH}/deepSea/growl.mp3`,
+    `${SFX_PATH}/deepSea/haunting-whale.mp3`,
+    `${SFX_PATH}/deepSea/long-howl.mp3`,
+    `${SFX_PATH}/deepSea/underwater.mp3`,
+    `${SFX_PATH}/deepSea/whale.mp3`,
   ],
   dragon: [
-    '/ignore/sounds/dragon/dragon-distant-howling.mp3',
-    '/ignore/sounds/dragon/dragon-flaping-winds.mp3',
-    '/ignore/sounds/dragon/dragon-roar-near.mp3',
-    '/ignore/sounds/dragon/high-growl.mp3',
-    '/ignore/sounds/dragon/low-growl.mp3',
+    `${SFX_PATH}/dragon/dragon-distant-howling.mp3`,
+    `${SFX_PATH}/dragon/dragon-flaping-winds.mp3`,
+    `${SFX_PATH}/dragon/dragon-roar-near.mp3`,
+    `${SFX_PATH}/dragon/high-growl.mp3`,
+    `${SFX_PATH}/dragon/low-growl.mp3`,
   ],
   forest: [
-    '/ignore/sounds/forest/crickets-forest-night.mp3',
-    '/ignore/sounds/forest/early-forest.mp3',
+    `${SFX_PATH}/forest/crickets-forest-night.mp3`,
+    `${SFX_PATH}/forest/early-forest.mp3`,
   ],
   props: [
-    '/ignore/sounds/props/ancient-mechanical-gears-city.mp3',
-    '/ignore/sounds/props/fire-crackling.mp3',
-    '/ignore/sounds/props/magical-opening.mp3',
-    '/ignore/sounds/props/magic-item.mp3',
+    `${SFX_PATH}/props/ancient-mechanical-gears-city.mp3`,
+    `${SFX_PATH}/props/fire-crackling.mp3`,
+    `${SFX_PATH}/props/magical-opening.mp3`,
+    `${SFX_PATH}/props/magic-item.mp3`,
   ],
   rain: [
-    '/ignore/sounds/rain/rain.mp3',
+    `${SFX_PATH}/rain/rain.mp3`,
   ],
   thunder: [
-    '/ignore/sounds/thunder/dry-thunder.mp3',
-    '/ignore/sounds/thunder/long-heavy-thunder.mp3',
-    '/ignore/sounds/thunder/loud-thunder.mp3',
+    `${SFX_PATH}/thunder/dry-thunder.mp3`,
+    `${SFX_PATH}/thunder/long-heavy-thunder.mp3`,
+    `${SFX_PATH}/thunder/loud-thunder.mp3`,
   ],
   walk: [
-    '/ignore/sounds/walk/grass-footstep.mp3',
-    '/ignore/sounds/walk/rocky-footstep.mp3',
-    '/ignore/sounds/walk/wet-footstep.mp3',
+    `${SFX_PATH}/walk/grass-footstep.mp3`,
+    `${SFX_PATH}/walk/rocky-footstep.mp3`,
+    `${SFX_PATH}/walk/wet-footstep.mp3`,
   ],
   water: [
-    '/ignore/sounds/water/stream.mp3',
+    `${SFX_PATH}/water/stream.mp3`,
   ],
   wind: [
-    '/ignore/sounds/wind/desert-wind.mp3',
-    '/ignore/sounds/wind/winter-wind.mp3',
+    `${SFX_PATH}/wind/desert-wind.mp3`,
+    `${SFX_PATH}/wind/winter-wind.mp3`,
   ],
   weapon: [
-    '/ignore/sounds/weapon/gun-shot.mp3',
-    '/ignore/sounds/weapon/gun-reload.mp3',
+    `${SFX_PATH}/weapon/gun-shot.mp3`,
+    `${SFX_PATH}/weapon/gun-reload.mp3`,
   ]
 } as const
 

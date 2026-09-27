@@ -19,7 +19,7 @@ import { groundTexturePaths } from '../Rendering/map/OpenPlains'
 export default function Experience({ config }: { config: WorldConfig }) {
   const worldConfig = config
   const mapId = worldConfig.mode === 'open' ? 'openPlains' : worldConfig.map
-  const environment = worldConfig.mode === 'open' ? worldConfig.environment : undefined
+  const environment = worldConfig.environment
 
   // note for me: player + ground before first paint, everything else streams via Suspense, else things will get fucked !! :)
   useTexture.preload(groundTexturePaths(worldConfig.mode === 'open' ? worldConfig.ground?.texture : undefined))
