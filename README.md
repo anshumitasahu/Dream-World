@@ -14,12 +14,6 @@ Everything connects like a living game. Dream it into existence, reshape it by c
 
 ## Features
 
-### Dream it, live it
-> Type a sentence, get a world. Terrain, creatures, weather, sky — AI builds it all and drops you in, ready to walk around.
-<p align="center">
-  <img src="docs/img/og.png" alt="Dreamworld landing — type a dream to generate a world" width="100%">
-</p>
-
 ### Vibe-dream with an agentic chat
 > Don't like something? Just say so. Ask for jungles, broken rocks, new creatures — the agent reshapes the live world while you watch.
 <p align="center">
