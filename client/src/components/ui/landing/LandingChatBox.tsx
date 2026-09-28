@@ -18,10 +18,10 @@ const THINKING_MESSAGES = [
 ]
 
 const SUGGESTIONS = [
-  'a floating island with a dragon perched above the clouds',
-  'a neon cyberpunk city street at midnight in the rain',
+  'a floating fortress in the sky in a stormy night',
+  'hunting a dragon in the forest at midnight in the rain',
   'an enchanted forest with glowing mushrooms and fireflies',
-  'a dreamy colorscape with floating islands',
+  'a dreamy colorscape with floating islands shrine',
 ]
 
 function autoresize(el: HTMLTextAreaElement) {
