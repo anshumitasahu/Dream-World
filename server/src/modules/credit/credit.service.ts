@@ -2,7 +2,7 @@ import { ApiError } from "@/lib/errors";
 import { prisma } from "@/lib/prisma";
 import type { creditSummary } from "@/sharedTypes/credit/credit.model";
 
-export const SIGNUP_CREDITS = 100;
+export const SIGNUP_CREDITS = 10;
 
 // 100 credits = $0.50, so a single credit is worth $0.005.
 const USD_PER_CREDIT = 0.5 / 100;

@@ -3,8 +3,10 @@ import { motion, useAnimate } from 'motion/react'
 
 export default function MagicWand({
   className = 'w-50',
+  floatHeight = 28,
 }: {
   className?: string
+  floatHeight?: number
 }) {
   const [scope, animate] = useAnimate()
 
@@ -26,7 +28,7 @@ export default function MagicWand({
   return (
     <motion.div
       ref={scope}
-      animate={{ y: [0, -20, 0] }}
+      animate={{ y: [0, -floatHeight, 0] }}
       transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
     >
       <svg className={className} viewBox="0 0 630 751" fill="none" xmlns="http://www.w3.org/2000/svg">

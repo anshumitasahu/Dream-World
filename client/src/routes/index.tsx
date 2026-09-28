@@ -2,7 +2,6 @@ import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { LandingChatBox } from '../components/ui/landing/LandingChatBox'
 import { getToken } from '../lib/auth'
 import LogoLong from '../assets/LogoLong'
-import { GithubLogoIcon } from '@phosphor-icons/react'
 
 
 export const Route = createFileRoute('/')({
@@ -65,15 +64,10 @@ function LandingPage() {
           <div className='mt-12 w-full max-w-2xl'>
             <LandingChatBox hideSuggestion={false} />
           </div>
-          <a
-            href='https://github.com'
-            target='_blank'
-            rel='noreferrer'
-            className='ml-auto flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur transition hover:border-white/30 hover:text-white'
-          >
-            <GithubLogoIcon className='h-4 w-4' weight='fill'/>
-            GitHub
-          </a>
+          <div className='ml-auto flex flex-col items-center gap-1.5'>
+            <img src='/stardance-logo.png' alt='Stardance' className='h-16 w-auto' />
+            <span className='text-xs text-white/60'><b className='font-bold text-white'>10 free*</b> credits on signup</span>
+          </div>
         </div>
       </main>
     </div>

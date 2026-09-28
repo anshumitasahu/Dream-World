@@ -6,6 +6,7 @@ import { useSignup } from '../../hooks/useAuth'
 import { getApiErrorMessage } from '../../lib/api'
 import { getToken } from '../../lib/auth'
 import { signupSchema } from '../../sharedTypes/auth/auth.model'
+import Logo from '../../assets/Logo'
 
 export const Route = createFileRoute('/auth/signup')({
   beforeLoad: () => {
@@ -42,6 +43,9 @@ function SignupPage() {
       <div className='flex w-full flex-col px-6 py-6 sm:px-12 lg:w-2/5'>
         <div className='flex flex-1 items-center justify-center py-12'>
           <div className='w-full max-w-sm'>
+            <div className='mb-6'>
+              <Logo className='w-10' />
+            </div>
             <h1 className='text-2xl font-semibold tracking-tight'>Create your account</h1>
             <p className='mt-1 text-sm text-white/50'>Please sign up to start building</p>
 

@@ -1,11 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { BorderBeam } from 'border-beam'
+import { AnimatePresence, motion } from 'motion/react'
 import { getChatErrorMessage, useCreateChat } from '../../../hooks/useChat'
 import { getToken } from '../../../lib/auth'
 
 const DRAFT_KEY = 'dream-draft'
 const MAX_LENGTH = 1000
+
+const THINKING_MESSAGES = [
+  'Dreaming up your world…',
+  'Shaping the terrain…',
+  'Painting the sky…',
+  'Summoning its creatures…',
+  'Hiding a few secrets…',
+  'Almost there…',
+]
 
 const SUGGESTIONS = [
   'a floating island with a dragon perched above the clouds',
@@ -17,6 +27,35 @@ const SUGGESTIONS = [
 function autoresize(el: HTMLTextAreaElement) {
   el.style.height = 'auto'
   el.style.height = `${Math.min(el.scrollHeight, 200)}px`
+}
+
+function ThinkingHint() {
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % THINKING_MESSAGES.length)
+    }, 2600)
+    return () => clearInterval(id)
+  }, [])
+
+  return (
+    <div className='mt-4 flex items-center justify-center gap-2.5 text-sm text-white/60'>
+      <div className='relative h-5 overflow-hidden'>
+        <AnimatePresence mode='wait'>
+          <motion.p
+            key={index}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.4, ease: 'easeInOut' }}
+          >
+            {THINKING_MESSAGES[index]}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+    </div>
+  )
 }
 
 interface LandingChatBoxProps {
@@ -154,6 +193,8 @@ export function LandingChatBox({
         </div>
       </BorderBeam>
 
+      {createChat.isPending && <ThinkingHint />}
+
       {createChat.isError && (
         <p role='alert' className='mt-3 text-center text-sm text-red-400'>
           {getChatErrorMessage(createChat.error)}
@@ -161,7 +202,7 @@ export function LandingChatBox({
       )}
 
       {
-        !hideSuggestion && (
+        !hideSuggestion && !createChat.isPending && (
           <div className={`mt-12 flex flex-wrap items-start gap-2 ${suggestionsJustify}`}>
             {SUGGESTIONS.map((s) => (
               <button

@@ -7,7 +7,11 @@
     "dev": "bun run --watch src/index.ts",
     "db:migrate": "prisma migrate dev",
     "db:generate": "prisma generate",
-    "db:seed": "bun run prisma/seed.ts"
+    "db:seed": "bun run prisma/seed.ts",
+    "compile": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server.bin src/index.ts",
+    "prisma:generate": "npx prisma generate",
+    "build": "bun prisma:generate && bun compile",
+    "start": "./server.bin"
   },
   "devDependencies": {
     "@types/bun": "latest",

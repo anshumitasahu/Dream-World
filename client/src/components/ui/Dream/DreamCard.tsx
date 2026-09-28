@@ -7,6 +7,7 @@ import { LikeButton } from './LikeButton'
 interface DreamCardProps {
   dream: exploreDream
   featured?: boolean
+  imageUrl?: string
 }
 
 function summaryLabel(summary: dreamWorldSummary): string {
@@ -18,7 +19,7 @@ function summaryLabel(summary: dreamWorldSummary): string {
   return bits.length > 0 ? `Open · ${bits.join(' · ')}` : 'Open world'
 }
 
-export function DreamCard({ dream, featured }: DreamCardProps) {
+export function DreamCard({ dream, featured, imageUrl }: DreamCardProps) {
   const initial = (dream.author.name ?? '?').trim().charAt(0).toUpperCase() || '?'
 
   return (
@@ -31,7 +32,7 @@ export function DreamCard({ dream, featured }: DreamCardProps) {
       >
         <div className={`relative overflow-hidden ${featured ? 'aspect-[16/10]' : 'aspect-[16/9]'}`}>
           <img
-            src={dreamImageUrl(dream.id)}
+            src={imageUrl ?? dreamImageUrl(dream.id)}
             alt=''
             loading='lazy'
             className='h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]'

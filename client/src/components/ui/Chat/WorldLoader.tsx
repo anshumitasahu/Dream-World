@@ -22,7 +22,7 @@ export function WorldLoader() {
 
   return (
     <div className='absolute inset-0 z-10 flex flex-col items-center justify-center gap-8 bg-black px-6 text-center'>
-      <MagicWand className='w-36 sm:w-44' />
+      <MagicWand className='w-44 sm:w-65' />
       <div className='relative h-6'>
         <AnimatePresence mode='wait'>
           <motion.p

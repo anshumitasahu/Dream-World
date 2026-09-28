@@ -53,10 +53,7 @@ function RouteComponent() {
 
         <div className='relative z-10 flex min-h-screen flex-col items-center px-6 sm:px-12'>
           <div className='flex w-full justify-end pt-6'>
-            <div
-              title='100 credits = $0.50 · 1 credit is charged per message'
-              className='flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-white/70 backdrop-blur-xl'
-            >
+            <div className='flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-white/70 backdrop-blur-xl'>
               <CoinsIcon className='h-4 w-4 text-blue-300' weight='fill' />
               {creditsQuery.isPending ? (
                 <span className='text-white/40'>loading…</span>
@@ -65,7 +62,7 @@ function RouteComponent() {
               ) : (
                 <>
                   <span className='font-semibold tabular-nums text-white'>{creditsQuery.data?.credits ?? 0}</span>
-                  <span>credits</span>
+                  <span>dream coins</span>
                 </>
               )}
             </div>

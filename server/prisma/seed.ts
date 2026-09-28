@@ -113,7 +113,11 @@ async function main() {
         const tag = await tx.tags.upsert({ where: { name }, update: {}, create: { name } });
         await tx.dreamTags.create({ data: { dreamId: created.id, tagId: tag.id } });
       }
-    });
+    },
+    {
+      timeout: 10000, // 5 seconds
+    }
+  );
 
     console.log(`seeded: ${dream.title} (${dream.likes} likes)`);
   }
